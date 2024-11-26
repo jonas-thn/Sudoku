@@ -37,82 +37,99 @@ int main(void)
 	initialisieren();
 
 
-
-	//--WHILE--
-
-
-	printf("Wähle eine Sudoku Datei aus:\n");
-
-	for (int i = 0; i < dateinAnzahl; i++)
-	{
-		datei d = dateinListe[i];
-		printf("%d - %s\n", d.nummer, d.schwierigkeit);
-	}
-
-	int test1 = 0;
-	int auswahl1 = 0;
 	while (1)
 	{
-		test1 = scanf("%d", &auswahl1);
+		printf("Wähle eine Sudoku Datei aus:\n");
 
-		if ((test1 != 1) || (dateiFinden(auswahl1) == -1))
+		for (int i = 0; i < dateinAnzahl; i++)
 		{
-			printf("Falsche Eingabe. Versuche es nochmal!\n");
+			datei d = dateinListe[i];
+			printf("%d - %s\n", d.nummer, d.schwierigkeit);
+		}
 
-			while(fgetc(stdin) != '\n');
+		int test1 = 0;
+		int auswahl1 = 0;
+		while (1)
+		{
+			test1 = scanf("%d", &auswahl1);
 
+			if ((test1 != 1) || (dateiFinden(auswahl1) == -1))
+			{
+				printf("Falsche Eingabe. Versuche es nochmal!\n");
+
+				while (fgetc(stdin) != '\n');
+
+				continue;
+			}
+			else
+			{
+				while (fgetc(stdin) != '\n');
+				break;
+			}
+		}
+
+		const char* dateiAuswahl = dateinListe[dateiFinden(auswahl1)].pfad;
+
+		zahlenLaden(getZahlen(), dateiAuswahl, getEditierbar());
+
+		system("cls"); //nur auf windows
+
+		printSudoku();
+		printf("\n");
+		printEditierbar();
+		printf("\n");
+
+		printf(
+			"Was ist deine nächste Aktion:\n"
+			"1 - Zahl eingeben\n"
+			"2 - Sudoku speichern und neu auswählen\n"
+			"3 - Sudoku speichern und Programm beenden\n"
+		);
+
+
+		int test2 = 0;
+		int auswahl2 = 0;
+		while (1)
+		{
+			test2 = scanf("%d", &auswahl2);
+
+			if ((test1 != 1) || !((auswahl2 == 1) || (auswahl2 == 2) || (auswahl2 == 3)))
+			{
+				printf("Falsche Eingabe. Versuche es nochmal!\n");
+
+				while (fgetc(stdin) != '\n');
+
+				continue;
+			}
+			else
+			{
+				while (fgetc(stdin) != '\n');
+				break;
+			}
+		}
+
+		if (auswahl2 == 1)
+		{
+			printf("EINGABE");
+			break;
+		}
+		else if(auswahl2 == 2)
+		{
+			system("cls"); //nur windows
+			zahlenSpeichern(getZahlen(), dateiAuswahl, getLänge());
 			continue;
+		}
+		else if(auswahl2 == 3)
+		{
+			zahlenSpeichern(getZahlen(), dateiAuswahl, getLänge());
+			return 0;
 		}
 		else
 		{
-			while (fgetc(stdin) != '\n');
-			break;
+			fprintf(stderr, "sollte nie passieren error");
+			return -1;
 		}
 	}
-	
-	const char* dateiAuswahl = dateinListe[dateiFinden(auswahl1)].pfad;
-
-	zahlenLaden(getZahlen(), dateiAuswahl, getEditierbar());
-
-	system("cls"); //nur auf windows
-
-	printSudoku();
-	printf("\n");
-	printEditierbar();
-	printf("\n");
-
-	printf(
-		"Was ist deine nächste Aktion:\n"
-		"1 - Zahl eingaben\n"
-		"2 - Sudoku speichern und neu auswählen\n"
-		"3 - Sudoku speichern und Programm beenden\n"
-	);
-
-
-	int test2 = 0;
-	int auswahl2 = 0;
-	while (1)
-	{
-		test2 = scanf("%d", &auswahl2);
-
-		if ((test1 != 1) || !((auswahl2 == 1) || (auswahl2 == 2) || (auswahl2 == 3)))
-		{
-			printf("Falsche Eingabe. Versuche es nochmal!\n");
-
-			while (fgetc(stdin) != '\n');
-
-			continue;
-		}
-		else
-		{
-			while (fgetc(stdin) != '\n');
-			break;
-		}
-	}
-
-	printf("Auswahl: %d", auswahl2);
-
-	//zahlenSpeichern(getZahlen(), "./Sudoku5.txt", getLänge());
 
 	beenden();
 

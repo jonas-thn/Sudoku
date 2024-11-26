@@ -4,21 +4,21 @@
 
 #define BREITE (9)
 #define HÖHE (9)
-#define QUADRAT (3)
+#define QUADRAT (3) 
 
-static char* zahlen = NULL;
+static char* zahlen = NULL; //entählt zahlen 
 static char* editierbar = NULL; //1 ist editierbar und 0 nicht
 
-int initialisieren();
+int initialisieren(); 
 
-void printSudoku();
-void printEditierbar();
+void printSudoku(); //sudoku mit zahlen printen
+void printEditierbar(); //printen, wo man editieren darf
 
-char* getZahlen();
-int getLänge();
-char* getEditierbar();
+char* getZahlen(); //zahlen array getter
+int getLänge(); //länge getter
+char* getEditierbar(); //editierbar array getter
 
-void beenden();
+void beenden(); //program aufräumen (free, usw...)
 
 
 

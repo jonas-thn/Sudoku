@@ -2,8 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "dateiarbeit.h"
-
 #define BREITE (9)
 #define HÖHE (9)
 #define QUADRAT (3)
@@ -15,6 +13,7 @@ int initialisieren();
 void printSudoku();
 
 char* getZahlen();
+int gibLänge();
 
 void beenden();
 

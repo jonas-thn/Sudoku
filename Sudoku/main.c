@@ -5,9 +5,11 @@ int main(void)
 {
 	initialisieren();
 
-	zahlenLaden(getZahlen());
+	zahlenLaden(getZahlen(), "./Sudoku1.txt");
 
 	printSudoku();
+
+	zahlenSpeichern(getZahlen(), "./Sudoku4.txt", gibLänge());
 
 	beenden();
 

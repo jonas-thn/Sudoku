@@ -28,6 +28,11 @@ char* getZahlen()
 	return zahlen;
 }
 
+int gibLänge()
+{
+	return (BREITE * HÖHE);
+}
+
 void printSudoku()
 {
 	for (int x = 0; x < BREITE; x++)

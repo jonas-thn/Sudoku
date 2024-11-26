@@ -1,17 +1,17 @@
 #include "dateiarbeit.h"
 
-int zahlenLaden(char* zahlen)
+int zahlenLaden(char* zahlen, const char* dateiname)
 {
 	FILE* datei;
 	char temp;
 	int n = 0;
 
-	datei = fopen("./Sudoku1.txt", "r");
+	datei = fopen(dateiname, "r");
 
 
 	if (datei == NULL)
 	{
-		fprintf(stderr, "datei laden null error");
+		fprintf(stderr, "datei öffnen null error");
 		return -1;
 	}
 
@@ -28,3 +28,30 @@ int zahlenLaden(char* zahlen)
 
 	return 0;
 }
+
+int zahlenSpeichern(char* zahlen, const char* dateiname, int länge)
+{
+	FILE* datei;
+	datei = fopen(dateiname, "w");
+
+	if (datei == NULL)
+	{
+		fprintf(stderr, "datei öffnen null error");
+		return -1;
+	}
+
+	for (int i = 0; i < länge; i++)
+	{
+		if (i % 9 == 0)
+		{
+			fputc('\n', datei);
+		}
+
+		fputc(zahlen[i], datei);
+	}
+
+	fclose(datei);
+
+	return 0;
+}
+

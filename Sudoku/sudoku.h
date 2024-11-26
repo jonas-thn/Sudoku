@@ -7,13 +7,16 @@
 #define QUADRAT (3)
 
 static char* zahlen = NULL;
+static char* editierbar = NULL; //1 ist editierbar und 0 nicht
 
 int initialisieren();
 
 void printSudoku();
+void printEditierbar();
 
 char* getZahlen();
-int gibLänge();
+int getLänge();
+char* getEditierbar();
 
 void beenden();
 

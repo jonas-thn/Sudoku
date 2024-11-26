@@ -1,6 +1,6 @@
 #include "dateiarbeit.h"
 
-int zahlenLaden(char* zahlen, const char* dateiname)
+int zahlenLaden(char* zahlen, const char* dateiname, char* editierbar)
 {
 	FILE* datei;
 	char temp;
@@ -20,6 +20,7 @@ int zahlenLaden(char* zahlen, const char* dateiname)
 		if (temp != '\n')
 		{
 			zahlen[n] = temp;
+			editierbar[n] = temp == '.' ? '1' : '0';
 			n++;
 		}
 	}

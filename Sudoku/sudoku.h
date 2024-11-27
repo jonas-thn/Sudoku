@@ -14,12 +14,14 @@ int initialisieren();
 void printSudoku(); //sudoku mit zahlen printen
 void printEditierbar(); //printen, wo man editieren darf
 
+int feldSetzen(int x, int y, char zahl);
+int zahlCheck(char zahl);
+
 char* getZahlen(); //zahlen array getter
 int getLänge(); //länge getter
 char* getEditierbar(); //editierbar array getter
 
 void beenden(); //program aufräumen (free, usw...)
-
 
 
 

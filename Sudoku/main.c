@@ -1,133 +1,39 @@
 #include "sudoku.h"
 #include "dateiarbeit.h"
+#include "input.h"
 
-//im menü auwählbare datei
-typedef struct datei 
+int mainMenü()
 {
-	int nummer;
-	const char* pfad;
-	const char* schwierigkeit;
-} datei;
+	Neu: //goto label
+	int auswahl1 = dateiAuswahl();
 
-//liste an datein
-const datei dateinListe[] = { 
-	{.nummer = 1, .pfad = "./Sudoku1.txt", .schwierigkeit = "Einfach"},
-	{.nummer = 2, .pfad = "./Sudoku2.txt", .schwierigkeit = "Mittel"},
-	{.nummer = 3, .pfad = "./Sudoku3.txt", .schwierigkeit = "Schwer"},
-	{.nummer = 4, .pfad = "./Sudoku4.txt", .schwierigkeit = "Unmöglich"},
-	};
+	datei dateiAuswahl = dateinListe[dateiFinden(auswahl1)]; //datei auswahl pfad speichern
 
-//länge von datei liste
-const dateinAnzahl = sizeof(dateinListe) / sizeof(dateinListe[0]);
-
-//datei per nummer anhand auswahl im menü finden
-int dateiFinden(int auswahl)
-{
-	for (int i = 0; i < dateinAnzahl; i++)
-	{
-		if (auswahl == dateinListe[i].nummer)
-		{
-			return i;
-		}
-	}
-
-	return -1;
-}
-
-int main(void)
-{
-	system("chcp 1252 > NUL");
-
-	initialisieren(); //sudoku initialisieren (malloc, usw...)
-
+	zahlenLaden(getZahlen(), dateiAuswahl.originalPfad, getEditierbar(), dateiAuswahl.speicherPfad); //zahlen von datei in sudoku laden
+	
 	//main while schleife
 	while (1)
 	{
-		printf("Wähle eine Sudoku Datei aus:\n");
-
-		//alle auswahlmöglichkeiten printen
-		for (int i = 0; i < dateinAnzahl; i++)
-		{
-			datei d = dateinListe[i];
-			printf("%d - %s\n", d.nummer, d.schwierigkeit);
-		}
-
-		int test1 = 0; //scanf return test
-		int auswahl1 = 0; //auswahl nummer
-		while (1)
-		{
-			test1 = scanf("%d", &auswahl1); //auswahl scannen
-
-			if ((test1 != 1) || (dateiFinden(auswahl1) == -1)) //teste ob auswahl korrekt
-			{
-				printf("Falsche Eingabe. Versuche es nochmal!\n");
-
-				while (fgetc(stdin) != '\n'); //stdin buffer leeren
-
-				continue; //wenn nicht korrekt, dann nochmal
-			}
-			else
-			{
-				while (fgetc(stdin) != '\n'); //stdin buffer leeren
-				break; //aus while ausbrechen
-			}
-		}
-
-		const char* dateiAuswahl = dateinListe[dateiFinden(auswahl1)].pfad; //datei auswahl pfad speichern
-
-		zahlenLaden(getZahlen(), dateiAuswahl, getEditierbar()); //zahlen von datei in sudoku laden
-
 		system("cls"); //clear console (nur auf windows)
 
 		printSudoku(); //sudoku printen
 		printf("\n");
-		printEditierbar(); //printen, ob man feld ändern darf oder nicht
-		printf("\n");
 
-		//aktion auswählen
-		printf(
-			"Was ist deine nächste Aktion:\n"
-			"1 - Zahl eingeben\n"
-			"2 - Sudoku speichern und neu auswählen\n"
-			"3 - Sudoku speichern und Programm beenden\n"
-		);
-
-
-		int test2 = 0; //scanf return test
-		int auswahl2 = 0; //auswahl nummer 
-		while (1)
-		{
-			test2 = scanf("%d", &auswahl2); //auswahl scannen
-
-			if ((test1 != 1) || !((auswahl2 == 1) || (auswahl2 == 2) || (auswahl2 == 3))) //teste ob auswahl korrekt
-			{
-				printf("Falsche Eingabe. Versuche es nochmal!\n");
-
-				while (fgetc(stdin) != '\n'); //stdin buffer leeren
-
-				continue; //wenn nicht korrekt, dann nochmal
-			}
-			else
-			{
-				while (fgetc(stdin) != '\n'); //stdin buffer leeren
-				break; //aus while ausbrechen
-			}
-		}
+		int auswahl2 = aktionAuswahl();
 
 		if (auswahl2 == 1) //eingabe 
 		{
-			printf("EINGABE");
-			break;
+			aktionEingabe(feldSetzen);
 		}
-		else if(auswahl2 == 2) //speichern und neu auswählen
+		else if (auswahl2 == 2) //speichern und neu auswählen
 		{
 			system("cls"); //nur windows
-			zahlenSpeichern(getZahlen(), dateiAuswahl, getLänge());
-			continue;
+			zahlenSpeichern(getZahlen(), dateiAuswahl.speicherPfad, getLänge());
+			goto Neu;
 		}
-		else if(auswahl2 == 3) //speichern und programm beenden
+		else if (auswahl2 == 3) //speichern und programm beenden
 		{
-			zahlenSpeichern(getZahlen(), dateiAuswahl, getLänge());
+			zahlenSpeichern(getZahlen(), dateiAuswahl.speicherPfad, getLänge());
 			return 0;
 		}
 		else //sollte nie passieren - TEST
@@ -136,6 +42,15 @@ int main(void)
 			return -1;
 		}
 	}
+}
+
+int main(void)
+{
+	system("chcp 1252 > NUL");
+
+	initialisieren(); //sudoku initialisieren (malloc, usw...)
+
+	mainMenü(); //main menü auswahl usw...
 
 	beenden(); //program aufräumen (free, usw...)
 

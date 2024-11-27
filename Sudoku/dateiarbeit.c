@@ -1,12 +1,12 @@
 #include "dateiarbeit.h"
 
-int zahlenLaden(char* zahlen, const char* dateiname, char* editierbar) //zahlen & editierbar mit datei werten beladen
+int zahlenLaden(char* zahlen, const char* original, char* editierbar, char* speicher) //zahlen & editierbar mit datei werten beladen
 {
 	FILE* datei; //file pointer
 	char temp; //temp char speichern
 	int n = 0; //char nummer (in arrays)
 
-	datei = fopen(dateiname, "r"); //datei in read mode öffen
+	datei = fopen(speicher, "r"); //datei in read mode öffen
 
 
 	if (datei == NULL) //checken ob es funktioniert hat
@@ -20,6 +20,27 @@ int zahlenLaden(char* zahlen, const char* dateiname, char* editierbar) //zahlen 
 		if (temp != '\n') //'\n' nicht speichern
 		{
 			zahlen[n] = temp; //zahlen array beladen
+			n++; //nächster char(in arrays)
+		}
+	}
+
+	fclose(datei); //datei schließen
+
+	//---------- gesamten prozess wiederholen für originale datei, um editierbare stellen zu finden ----------
+
+	n = 0; //char nummer (in arrays)
+	datei = fopen(original, "r"); //datei in read mode öffen
+
+	if (datei == NULL) //checken ob es funktioniert hat
+	{
+		fprintf(stderr, "datei öffnen null error");
+		return -1;
+	}
+
+	while ((temp = fgetc(datei)) != EOF) //solange char lesen und in temp speichern, bin end of file erreicht
+	{
+		if (temp != '\n') //'\n' nicht speichern
+		{
 			editierbar[n] = temp == '.' ? '1' : '0'; //editierbar array laden, je nachdem ob zahl oder . gelesen
 			n++; //nächster char(in arrays)
 		}

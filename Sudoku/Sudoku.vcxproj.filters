@@ -24,12 +24,18 @@
     <ClCompile Include="dateiarbeit.c">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="input.c">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sudoku.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="dateiarbeit.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

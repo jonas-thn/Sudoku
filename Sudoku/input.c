@@ -2,10 +2,10 @@
 
 //liste an datein
 const datei dateinListe[] = {
-	{.nummer = 1, .originalPfad = "./Sudoku1.txt", .schwierigkeit = "Einfach", .speicherPfad="./Sudoku1_Save.txt"},
-	{.nummer = 2, .originalPfad = "./Sudoku2.txt", .schwierigkeit = "Mittel", .speicherPfad = "./Sudoku2_Save.txt"},
-	{.nummer = 3, .originalPfad = "./Sudoku3.txt", .schwierigkeit = "Schwer", .speicherPfad = "./Sudoku3_Save.txt"},
-	{.nummer = 4, .originalPfad = "./Sudoku4.txt", .schwierigkeit = "Unmöglich", .speicherPfad = "./Sudoku4_Save.txt"},
+	{.nummer = 1, .originalPfad = "Sudokus/Sudoku1.txt", .schwierigkeit = "Einfach", .speicherPfad="Sudokus/Sudoku1_Save.txt"},
+	{.nummer = 2, .originalPfad = "Sudokus/Sudoku2.txt", .schwierigkeit = "Mittel", .speicherPfad = "Sudokus/Sudoku2_Save.txt"},
+	{.nummer = 3, .originalPfad = "Sudokus/Sudoku3.txt", .schwierigkeit = "Schwer", .speicherPfad = "Sudokus/Sudoku3_Save.txt"},
+	{.nummer = 4, .originalPfad = "Sudokus/Sudoku4.txt", .schwierigkeit = "Unmöglich", .speicherPfad = "Sudokus/Sudoku4_Save.txt"},
 };
 
 //datei per nummer anhand auswahl im menü finden

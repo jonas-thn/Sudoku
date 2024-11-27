@@ -4,42 +4,47 @@
 
 int mainMenü()
 {
-	Neu: //goto label
-	int auswahl1 = dateiAuswahl();
-
-	datei dateiAuswahl = dateinListe[dateiFinden(auswahl1)]; //datei auswahl pfad speichern
-
-	zahlenLaden(getZahlen(), dateiAuswahl.originalPfad, getEditierbar(), dateiAuswahl.speicherPfad); //zahlen von datei in sudoku laden
-	
-	//main while schleife
-	while (1)
+	while (1) //neu auswahl schlefe
 	{
-		system("cls"); //clear console (nur auf windows)
+		//goto label
+		int auswahl1 = dateiAuswahl();
 
-		printSudoku(); //sudoku printen
-		printf("\n");
+		datei dateiAuswahl = dateinListe[dateiFinden(auswahl1)]; //datei auswahl pfad speichern
 
-		int auswahl2 = aktionAuswahl();
+		zahlenLaden(getZahlen(), dateiAuswahl.originalPfad, getEditierbar(), dateiAuswahl.speicherPfad); //zahlen von datei in sudoku laden
 
-		if (auswahl2 == 1) //eingabe 
+		//main menü schleife
+		while (1)
 		{
-			aktionEingabe(feldSetzen);
-		}
-		else if (auswahl2 == 2) //speichern und neu auswählen
-		{
-			system("cls"); //nur windows
-			zahlenSpeichern(getZahlen(), dateiAuswahl.speicherPfad, getLänge());
-			goto Neu;
-		}
-		else if (auswahl2 == 3) //speichern und programm beenden
-		{
-			zahlenSpeichern(getZahlen(), dateiAuswahl.speicherPfad, getLänge());
-			return 0;
-		}
-		else //sollte nie passieren - TEST
-		{
-			fprintf(stderr, "sollte nie passieren error");
-			return -1;
+			system("cls"); //clear console (nur auf windows)
+
+			printSudoku(); //sudoku printen
+			printf("\n");
+
+			int auswahl2 = aktionAuswahl();
+
+			if (auswahl2 == 1) //eingabe 
+			{
+				aktionEingabe(feldSetzen);
+				system("cls");
+				printSudoku();
+			}
+			else if (auswahl2 == 2) //speichern und neu auswählen
+			{
+				system("cls"); //nur windows
+				zahlenSpeichern(getZahlen(), dateiAuswahl.speicherPfad, getLänge());
+				break; // geht in äußere schleife
+			}
+			else if (auswahl2 == 3) //speichern und programm beenden
+			{
+				zahlenSpeichern(getZahlen(), dateiAuswahl.speicherPfad, getLänge());
+				return 0; //gutes ende
+			}
+			else //sollte nie passieren 
+			{
+				fprintf(stderr, "sollte nie passieren error");
+				return -1; //schlechtes ende
+			}
 		}
 	}
 }

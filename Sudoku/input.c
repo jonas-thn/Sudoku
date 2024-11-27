@@ -42,7 +42,7 @@ int dateiAuswahl()
 
 		if ((test1 != 1) || (dateiFinden(auswahl) == -1)) //teste ob auswahl korrekt
 		{
-			printf("Falsche Eingabe. Versuche es nochmal!\n");
+			printf("\nFalsche Eingabe. Versuche es nochmal!\n\n");
 
 			while (fgetc(stdin) != '\n'); //stdin buffer leeren
 
@@ -78,7 +78,7 @@ int aktionAuswahl()
 
 		if ((test != 1) || !((auswahl == 1) || (auswahl == 2) || (auswahl == 3))) //teste ob auswahl korrekt
 		{
-			printf("Falsche Eingabe. Versuche es nochmal!\n");
+			printf("\nFalsche Eingabe. Versuche es nochmal!\n\n");
 
 			while (fgetc(stdin) != '\n'); //stdin buffer leeren
 
@@ -108,13 +108,12 @@ void aktionEingabe(feldSetzenEvent setzen)
 	while (1)
 	{
 		zeile = 0;
-		test1 = 0;
 		printf("In welcher Zeile möchtest du eine Zahl platzieren: ");
 		test1 = scanf("%d", &zeile); //auswahl scannen
 
 		if (!(((zeile > 0) && (zeile <= 9)) && (test1 == 1))) //teste ob auswahl korrekt
 		{
-			printf("Falsche Eingabe. Versuche es nochmal!\n");
+			printf("\nFalsche Eingabe. Versuche es nochmal!\n\n");
 
 			while (fgetc(stdin) != '\n'); //stdin buffer leeren
 
@@ -122,13 +121,12 @@ void aktionEingabe(feldSetzenEvent setzen)
 		}
 
 		spalte = 0;
-		test2 = 0;
 		printf("In welcher Spalte möchtest du eine Zahl platzieren: ");
 		test2 = scanf("%d", &spalte); //auswahl scannen
 
 		if (!(((spalte > 0) && (spalte <= 9)) && (test2 == 1))) //teste ob auswahl korrekt
 		{
-			printf("Falsche Eingabe. Versuche es nochmal!\n");
+			printf("\nFalsche Eingabe. Versuche es nochmal!\n\n");
 
 			while (fgetc(stdin) != '\n'); //stdin buffer leeren
 
@@ -138,27 +136,25 @@ void aktionEingabe(feldSetzenEvent setzen)
 		while (fgetc(stdin) != '\n');
 
 		auswahl = '0';
-		test3 = 0;
 		printf("Welche Zahl möchtest du platzieren: ");
 		test3 = scanf("%c", &auswahl); //auswahl scannen
-		printf("\n");
+
+		if (!(test3 == 1)) //teste ob auswahl korrekt
+		{
+			printf("\nFalsche Eingabe. Versuche es nochmal!\n\n");
+
+			while (fgetc(stdin) != '\n'); //stdin buffer leeren
+
+			continue; //wenn nicht korrekt, dann nochmal
+		}
+
+		while (fgetc(stdin) != '\n');
 
 		if (setzen(zeile, spalte, auswahl) == 0)
 		{
-			system("cls");
-			printSudoku(); //sudoku printen
-			//printf("\n");
-			//printEditierbar(); //printen, ob man feld ändern darf oder nicht
-			printf("\n");
 			return;
 		}
 
-		system("cls");
-
-		printf("Falsche Eingabe. Versuche es nochmal!\n");
-
-		printSudoku();
-
-		while (fgetc(stdin) != '\n'); //stdin buffer leeren
+		printf("\nFalsche Eingabe. Versuche es nochmal!\n\n");
 	}
 }

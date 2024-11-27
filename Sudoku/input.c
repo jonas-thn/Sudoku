@@ -15,13 +15,14 @@ int dateiFinden(int auswahl)
 	{
 		if (auswahl == dateinListe[i].nummer)
 		{
-			return i;
+			return i; //gefunden index
 		}
 	}
 
-	return -1;
+	return -1; //nicht gefunden 
 }
 
+//datei auswahl menü
 int dateiAuswahl()
 {
 	int auswahl = 0;
@@ -58,6 +59,7 @@ int dateiAuswahl()
 	return auswahl;
 }
 
+//aktion auswahl menü
 int aktionAuswahl()
 {
 	int auswahl = 0;
@@ -94,6 +96,7 @@ int aktionAuswahl()
 	return auswahl;
 }
 
+//eingabe von aktion / zahl in feld setzen
 void aktionEingabe(feldSetzenEvent setzen)
 {
 	int zeile = 0;
@@ -150,7 +153,7 @@ void aktionEingabe(feldSetzenEvent setzen)
 
 		while (fgetc(stdin) != '\n');
 
-		if (setzen(zeile, spalte, auswahl) == 0)
+		if (setzen(zeile, spalte, auswahl) == 0) //feld setzen wenn möglich 
 		{
 			return;
 		}

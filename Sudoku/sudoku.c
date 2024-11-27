@@ -1,11 +1,13 @@
 #include "sudoku.h"
 
-#define TRUE 1
+//true und false definitionen
+#define TRUE 1 
 #define FALSE 0
 
-#define COLOR_RED     "\x1b[31m"
-#define COLOR_GREEN   "\x1b[32m"
-#define COLOR_RESET   "\x1b[m"
+//farbcodes für print
+#define FARBE_ROT "\x1b[31m" 
+#define FARBE_GRÜN "\x1b[32m"
+#define FARBE_ZURÜCKSETZEN "\x1b[m"
 
 int initialisieren()
 {
@@ -27,8 +29,8 @@ int initialisieren()
 
 	for (int i = 0; i < BREITE * HÖHE; i++) //array inhalt füllen mit deafault werten
 	{
-		zahlen[i] = '.';
-		editierbar[i] = '0';
+		zahlen[i] = '.'; //zahlen array mit punkten füllen (initial)
+		editierbar[i] = '0'; //editierbar array mit 0 füllen (initial)
 	}
 
 	return 0; //alles ok
@@ -48,16 +50,16 @@ int feldSetzen(int x, int y, char zahl)
 	x = y;
 	y = temp;
 
-	int zCheck = zahlCheck(zahl);
-	int xCheck = ((x >= 0) && (x < BREITE));
-	int yCheck = ((y >= 0) && (y < HÖHE));
+	int zCheck = zahlCheck(zahl); //checken ob zahl valide
+	int xCheck = ((x >= 0) && (x < BREITE)); //checken ob x eingabe in breite
+	int yCheck = ((y >= 0) && (y < HÖHE)); //checken ob y eingabe in breite
 
 	int editierbarCheck = -1;
-	if (editierbar[BREITE * y + x] == '0')
+	if (editierbar[BREITE * y + x] == '0') //testen ob feld nicht editierbar :(
 	{
 		editierbarCheck = 0;
 	}
-	else if (editierbar[BREITE * y + x] == '1')
+	else if (editierbar[BREITE * y + x] == '1') //testen ob feld editierbar :)
 	{
 		editierbarCheck = 1;
 	}
@@ -76,20 +78,20 @@ int feldSetzen(int x, int y, char zahl)
 	return -1; //nicht funktioniert
 }
 
-int zahlCheck(char zahl)
+int zahlCheck(char zahl) //testen ob eingegebene zahl (char) passt
 {
-	char valideZahlen[] = { '1', '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9' };
-	int n = 9;
+	char valideZahlen[] = { '1', '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9' }; //mange an möglichen zahlen
+	int n = 9; //länge von  valideZahlen
 
 	for (int i = 0; i < n; i++)
 	{
-		if (zahl == valideZahlen[i])
+		if (zahl == valideZahlen[i]) //testen ob eingegebene zahl in valide zahlen enthalten ist
 		{
-			return TRUE; //true
+			return TRUE; 
 		}
 	}
 
-	return FALSE; //false
+	return FALSE; //nicht gültige eingabe
 }
 
 char* getZahlen() //zahlen array getter
@@ -111,7 +113,7 @@ void printSudoku() //sudoku mit zahlen in console rpinten
 {
 	for (int x = 0; x < BREITE; x++)
 	{
-		if (x % QUADRAT == 0) 
+		if (x % QUADRAT == 0) //nach jedem Quadrat horizontale linie
 		{
 			printf("+ - - - + - - - + - - - +\n");
 		}
@@ -120,23 +122,21 @@ void printSudoku() //sudoku mit zahlen in console rpinten
 		{
 			if (y % QUADRAT == 0)
 			{
-				printf("| ");
+				printf("| "); //nach jedem Quadrat vertikale Linie
 			}
 
 			if (editierbar[BREITE * x + y] == '0')
 			{
-				printf("%s%c%s ",COLOR_RED, zahlen[BREITE * x + y], COLOR_RESET); //x und y getauscht, sonst transformiert 
-				//printf("%c ",zahlen[BREITE * x + y]); //x und y getauscht, sonst transformiert 
+				printf("%s%c%s ",FARBE_ROT, zahlen[BREITE * x + y], FARBE_ZURÜCKSETZEN); //x und y getauscht, sonst transformiert 
 			}
 			else if (editierbar[BREITE * x + y] == '1')
 			{
-				//printf("%s%c%s ", COLOR_GREEN, zahlen[BREITE * x + y], COLOR_RESET); //x und y getauscht, sonst transformiert 
 				printf("%c ", zahlen[BREITE * x + y]); //x und y getauscht, sonst transformiert 
 			}
 		}
-		printf("|\n");
+		printf("|\n"); //am ende eine letzte vertikale linie
 	}
-	printf("+ - - - + - - - + - - - +\n");
+	printf("+ - - - + - - - + - - - +\n"); //am ende eine letzte horizonatle linie 
 }
 
 void printEditierbar() //sudoku mit editierbar - werten in console printen
@@ -145,18 +145,18 @@ void printEditierbar() //sudoku mit editierbar - werten in console printen
 	{
 		if (x % QUADRAT == 0)
 		{
-			printf("+ - - - + - - - + - - - +\n");
+			printf("+ - - - + - - - + - - - +\n"); //nach jedem Quadrat horizontale linie
 		}
 
 		for (int y = 0; y < HÖHE; y++)
 		{
 			if (y % QUADRAT == 0)
 			{
-				printf("| ");
+				printf("| "); //nach jedem Quadrat vertikale Linie
 			}
 			printf("%c ", editierbar[BREITE * x + y]); //x und y getauscht, sonst transformiert 
 		}
-		printf("|\n");
+		printf("|\n"); //am ende eine letzte vertikale linie
 	}
-	printf("+ - - - + - - - + - - - +\n");
+	printf("+ - - - + - - - + - - - +\n"); //am ende eine letzte horizonatle linie 
 }

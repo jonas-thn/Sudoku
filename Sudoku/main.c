@@ -6,12 +6,15 @@ int mainMenü()
 {
 	while (1) //neu auswahl schlefe
 	{
-		//goto label
-		int auswahl1 = dateiAuswahl();
+		int auswahl1 = dateiAuswahl(); //datei auswhlen menü
 
 		datei dateiAuswahl = dateinListe[dateiFinden(auswahl1)]; //datei auswahl pfad speichern
 
-		zahlenLaden(getZahlen(), dateiAuswahl.originalPfad, getEditierbar(), dateiAuswahl.speicherPfad); //zahlen von datei in sudoku laden
+		//zahlen von datei in sudoku laden
+		if (zahlenLaden(getZahlen(), dateiAuswahl.originalPfad, getEditierbar(), dateiAuswahl.speicherPfad) == -1)
+		{
+			return -1; //schlechtes ende
+		}
 
 		//main menü schleife
 		while (1)
@@ -21,23 +24,35 @@ int mainMenü()
 			printSudoku(); //sudoku printen
 			printf("\n");
 
-			int auswahl2 = aktionAuswahl();
+			int auswahl2 = aktionAuswahl(); //wähle menü aktion aus
 
 			if (auswahl2 == 1) //eingabe 
 			{
-				aktionEingabe(feldSetzen);
+				aktionEingabe(feldSetzen); //feld setzen eingabe
 				system("cls");
-				printSudoku();
+				printSudoku(); //sudoku printen
 			}
 			else if (auswahl2 == 2) //speichern und neu auswählen
 			{
 				system("cls"); //nur windows
-				zahlenSpeichern(getZahlen(), dateiAuswahl.speicherPfad, getLänge());
+				
+				//zahlen speichern in datei
+				if (zahlenSpeichern(getZahlen(), dateiAuswahl.speicherPfad, getLänge()) == -1)
+				{
+					return -1; //schlechtes ende
+				}
+				
 				break; // geht in äußere schleife
 			}
 			else if (auswahl2 == 3) //speichern und programm beenden
 			{
-				zahlenSpeichern(getZahlen(), dateiAuswahl.speicherPfad, getLänge());
+				//zahlen speichern in datei
+
+				if (zahlenSpeichern(getZahlen(), dateiAuswahl.speicherPfad, getLänge()) == -1)
+				{
+					return -1; //schlchtes ende
+				}
+
 				return 0; //gutes ende
 			}
 			else //sollte nie passieren 
@@ -51,11 +66,21 @@ int mainMenü()
 
 int main(void)
 {
-	system("chcp 1252 > NUL");
+	system("chcp 1252 > NUL"); 
 
-	initialisieren(); //sudoku initialisieren (malloc, usw...)
+	//sudoku initialisieren (malloc, usw...)
+	if (initialisieren() == -1)
+	{
+		fprintf(stderr, "INIT fehlgeschlagen!");
+		exit(1);
+	}
 
-	mainMenü(); //main menü auswahl usw...
+	//main menü auswahl usw...
+	if (mainMenü() == -1)
+	{
+		fprintf(stderr, "MENÜ fehlgeschlagen!");
+		exit(1);
+	}
 
 	beenden(); //program aufräumen (free, usw...)
 

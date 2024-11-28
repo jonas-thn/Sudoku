@@ -5,8 +5,7 @@
 /*						
 !!!MERKEN:				
 spalte = y			
-zeile = y			
-						
+zeile = y							
 */
 
 int mainMenü()
@@ -66,7 +65,7 @@ int mainMenü()
 			}
 			else if (auswahl2 == 4)
 			{
-				undo();
+				undo(); //letzten zug rückgängig machen
 			}
 			else //sollte nie passieren 
 			{

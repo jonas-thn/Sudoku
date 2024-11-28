@@ -15,7 +15,7 @@ typedef struct datei
 #define dateinAnzahl (4) //anzahlt von sudoku datein 
 const datei dateinListe[dateinAnzahl]; //liste an sudoku datein
 
-typedef int (*feldSetzenEvent)(int, int, char); //function pointer um keine abhängkeiten untereinander zu erzeugen (alle inclues in main)
+typedef int (*feldSetzenEvent)(int, int, char, int); //function pointer um keine abhängkeiten untereinander zu erzeugen (alle inclues in main)
 
 int dateiFinden(int auswahl); //datei finden via eingabe nummer
 

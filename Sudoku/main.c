@@ -2,6 +2,13 @@
 #include "dateiarbeit.h"
 #include "input.h"
 
+/*						
+!!!MERKEN:				
+spalte = y			
+zeile = y			
+						
+*/
+
 int mainMenü()
 {
 	while (1) //neu auswahl schlefe
@@ -15,6 +22,8 @@ int mainMenü()
 		{
 			return -1; //schlechtes ende
 		}
+
+		resetUndo();
 
 		//main menü schleife
 		while (1)
@@ -54,6 +63,10 @@ int mainMenü()
 				}
 
 				return 0; //gutes ende
+			}
+			else if (auswahl2 == 4)
+			{
+				undo();
 			}
 			else //sollte nie passieren 
 			{

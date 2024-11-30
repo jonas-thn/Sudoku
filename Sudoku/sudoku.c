@@ -49,7 +49,7 @@ void resetUndo() //undo funktionalität zurücksetzen
 
 int initialisieren()
 {
-	zahlen = (char*)malloc(sizeof(char) * BREITE * HÖHE); //speicher für zahlen array
+	zahlen = (char*)malloc(sizeof(char) * BREITE * HÖHE); //speicher für zahlen buffer
 
 	if (zahlen == NULL) //test ob malloc funktioniert hat
 	{

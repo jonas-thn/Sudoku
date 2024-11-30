@@ -1,10 +1,13 @@
+#include <stdio.h>
+
 #include "sudoku.h"
 #include "dateiarbeit.h"
 #include "input.h"
+#include "löser.h"
 
 /*						
 !!!MERKEN:				
-spalte = y			
+spalte = x			
 zeile = y							
 */
 
@@ -78,23 +81,31 @@ int mainMenü()
 
 int main(void)
 {
-	system("chcp 1252 > NUL"); 
+	//system("chcp 1252 > NUL"); 
 
-	//sudoku initialisieren (malloc, usw...)
-	if (initialisieren() == -1)
-	{
-		fprintf(stderr, "INIT fehlgeschlagen!");
-		exit(1);
-	}
+	////sudoku initialisieren (malloc, usw...)
+	//if (initialisieren() == -1)
+	//{
+	//	fprintf(stderr, "INIT fehlgeschlagen!");
+	//	exit(1);
+	//}
 
-	//main menü auswahl usw...
-	if (mainMenü() == -1)
-	{
-		fprintf(stderr, "MENÜ fehlgeschlagen!");
-		exit(1);
-	}
+	////main menü auswahl usw...
+	//if (mainMenü() == -1)
+	//{
+	//	fprintf(stderr, "MENÜ fehlgeschlagen!");
+	//	exit(1);
+	//}
 
-	beenden(); //program aufräumen (free, usw...)
+	//beenden(); //program aufräumen (free, usw...)
+
+	löserInitialisieren("Sudokus/Sudoku4.txt");
+
+	sudokuLösen();
+
+	printGelöstesSudoku();
+
+	löserBeenden();
 
 	return 0;
 }

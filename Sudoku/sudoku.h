@@ -42,7 +42,7 @@ int feldSetzen(int x, int y, char zahl, int undoMöglich); //ein feld setzen (wen
 int zahlCheck(char zahl); //testen ob zahl (char) passt
 
 void setZahlenElement(int x, int y, char element); //zahlen-element setter 
-char getZahlenElement(int x, int y); //zahlen-element getter (unsicher)
+char getZahlenElement(int x, int y); //zahlen-element getter 
 
 void setEditierbarElement(int x, int y, char element); //editierbar-element setter 
 char getEditierbarElement(int x, int y); //editierbar-element getter

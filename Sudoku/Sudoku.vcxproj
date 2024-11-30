@@ -129,12 +129,14 @@
   <ItemGroup>
     <ClCompile Include="dateiarbeit.c" />
     <ClCompile Include="input.c" />
+    <ClCompile Include="löser.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="sudoku.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dateiarbeit.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="löser.h" />
     <ClInclude Include="sudoku.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

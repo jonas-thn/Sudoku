@@ -102,6 +102,11 @@ int mainMenü()
 
 				break;
 			}
+			else if (auswahl2 == 6)
+			{
+				sudokuLeeren();
+				resetUndo();
+			}
 			else //sollte nie passieren 
 			{
 				fprintf(stderr, "sollte nie passieren error");

@@ -167,6 +167,20 @@ char* getEditierbar() //editierbar array getter
 	return editierbar;
 }
 
+void sudokuLeeren()
+{
+	for (int y = 0; y < HÖHE; y++)
+	{
+		for (int x = 0; x < BREITE; x++)
+		{
+			if (getEditierbarElement(x, y) == '1')
+			{
+				setZahlenElement(x, y, '.');
+			}
+		}
+	}
+}
+
 void printSudoku() //sudoku mit zahlen in console rpinten 
 {
 	for (int y = 0; y < HÖHE; y++) //!!!!!! erst zeilen(spalte für spalte) füllen, dann spalten füllen -> sonst transponiert

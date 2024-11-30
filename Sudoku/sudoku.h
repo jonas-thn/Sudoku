@@ -51,6 +51,8 @@ char* getZahlen(); //zahlen array getter
 int getLänge(); //länge getter
 char* getEditierbar(); //editierbar array getter
 
+void sudokuLeeren();
+
 void beenden(); //program aufräumen (free, usw...)
 
 

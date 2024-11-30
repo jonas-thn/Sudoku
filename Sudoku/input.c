@@ -70,8 +70,9 @@ int aktionAuswahl()
 		"1 - Zahl eingeben\n"
 		"2 - Sudoku speichern und neu auswählen\n"
 		"3 - Sudoku speichern und Programm beenden\n"
-		"4 - UNDO\n"
-		"5 - LÖSEN\n"
+		"4 - Undo\n"
+		"5 - Lösen\n"
+		"6 - Leeren (unwiederruflich)\n"
 	);
 
 
@@ -80,7 +81,7 @@ int aktionAuswahl()
 	{
 		test = scanf("%d", &auswahl); //auswahl scannen
 
-		if ((test != 1) || !((auswahl == 1) || (auswahl == 2) || (auswahl == 3) || (auswahl == 4) || (auswahl == 5))) //teste ob auswahl korrekt
+		if ((test != 1) || !((auswahl == 1) || (auswahl == 2) || (auswahl == 3) || (auswahl == 4) || (auswahl == 5) || (auswahl == 6))) //teste ob auswahl korrekt
 		{
 			printf("\nFalsche Eingabe. Versuche es nochmal!\n\n");
 

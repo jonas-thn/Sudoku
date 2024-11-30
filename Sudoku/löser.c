@@ -164,6 +164,7 @@ void sudokuLösen()
 				//startZahl = testZahl + 1 !!! WICHTIG -> es wird gespeichert, an welcher zahl die suche aufgehört hat
 				//falls der alorithmus zurück geht, wird die suche wiederhohlt (erstes valides feld gesucht)
 				//damit nicht wieder das gleiche feld gefunden wird, setzt der algorithmus die start zahl von der (eventuellen) zukünftigen suche auf die aktuell gefundene zahl + 1
+				//außerdem spaart man daurch so viele berechungen / vergleiche wie möglich
 				leeresFeld neuesFeld = { .x = feldTemp.x, .y = feldTemp.y, .zahl = zahlZuChar, .startZahl = testZahl + 1}; 
 				leereFelder[testFeldIndex] = neuesFeld; //in felder array setzten
 

@@ -23,7 +23,7 @@ int mainMenü()
 	{
 		int auswahl1 = dateiAuswahl(); //datei auswhlen menü
 
-		datei dateiAuswahl = dateinListe[dateiFinden(auswahl1)]; //datei auswahl pfad speichern
+		datei dateiAuswahl = getDateinListeElement(dateiFinden(auswahl1)); //datei auswahl pfad speichern
 
 		//zahlen von datei in sudoku laden
 		if (zahlenLaden(getZahlen(), dateiAuswahl.originalPfad, getEditierbar(), dateiAuswahl.speicherPfad) == -1)

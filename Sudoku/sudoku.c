@@ -1,5 +1,17 @@
 #include "sudoku.h"
 
+//static variablem müssen in der c datei definiert werden
+static const int BREITE = 9;
+static const int HÖHE = 9;
+static const int QUADRAT = 3;
+
+static char* zahlen = NULL; //entählt zahlen 
+static char* editierbar = NULL; //1 ist editierbar und 0 nicht
+
+#define UNDO_SPEICHER 100
+static undoFeld undoFelderStack[UNDO_SPEICHER]; //undo stack, um bis zu 100 züge zu speichern 
+static int undoIndex = -1; //oberstes element vom stack
+
 int aktionUndoSpeichern(int x, int y) //verheriges element + zug speichern
 {
 	if (undoIndex >= (UNDO_SPEICHER - 1)) //wenn stack voll, dann nicht speichern

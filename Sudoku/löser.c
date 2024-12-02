@@ -1,5 +1,16 @@
 #include "löser.h"
 
+//static variablem müssen in der c datei definiert werden
+static const int BREITE = 9;
+static const int HÖHE = 9;
+static const int QUADRAT = 3;
+
+#define MAX_LEERE_FLDER 81
+static leeresFeld leereFelder[81]; //array enthält zu bearbeitende felder (funktioniert wie stack)
+static int testFeldIndex = -1; //index, auf welchem feld sich der algorithmus grade befindet
+
+static char* sudoku = NULL; //sudoku buffer für algorithmus
+
 int löserInitialisieren(const char* original)
 {
 	sudoku = (char*)malloc(sizeof(char) * BREITE * HÖHE); //speicher für zahlen buffer in sudoku

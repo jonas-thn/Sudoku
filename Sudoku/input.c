@@ -1,5 +1,9 @@
 #include "input.h"
 
+//static variablem müssen in der c datei definiert werden
+#define dateinAnzahl (4) //anzahlt von sudoku datein 
+static const datei dateinListe[dateinAnzahl]; //liste an sudoku datein
+
 //liste an datein
 const datei dateinListe[] = {
 	{.nummer = 1, .originalPfad = "Sudokus/Sudoku1.txt", .schwierigkeit = "Einfach", .speicherPfad="Sudokus/Sudoku1_Save.txt"},
@@ -70,8 +74,8 @@ int aktionAuswahl()
 		"1 - Zahl eingeben\n"
 		"2 - Sudoku speichern und neu auswählen\n"
 		"3 - Sudoku speichern und Programm beenden\n"
-		"4 - Undo\n"
-		"5 - Lösen\n"
+		"4 - Aktion rückgängig machen\n"
+		"5 - Lösung anzeigen\n"
 		"6 - Leeren (unwiederruflich)\n"
 	);
 
@@ -164,4 +168,9 @@ void aktionEingabe(feldSetzenEvent setzen)
 
 		printf("\nFalsche Eingabe. Versuche es nochmal!\n\n");
 	}
+}
+
+datei getDateinListeElement(int index)
+{
+	return dateinListe[index];
 }

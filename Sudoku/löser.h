@@ -4,17 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define BREITE (9) //horizontale anzahl an sudoku feldern
-#define HÖHE (9) //vertikale anzahl an sudoku feldern
-#define QUADRAT (3) //3x3 elemente pro quadrat
-
-#define TRUE (1)
-#define FALSE (0)
-
-//farben 
-#define FARBE_ROT "\x1b[31m" 
-#define FARBE_GRÜN "\x1b[32m"
-#define FARBE_ZURÜCKSETZEN "\x1b[m"
+#include "utility.h" //enthält farben und true false
 
 //(ursprünglich) leeres feld zum speichern im algorithmus
 typedef struct leeresFeld
@@ -25,13 +15,6 @@ typedef struct leeresFeld
 	int startZahl;	//start zahl (für 1-9 loop) gespeichert, um zu verhindern, dass der algorithmus beim 
 					//zurückgehen den gleichen fehler mehrmals begeht (unendliche loop vermeiden + optimierung ermöglichen)
 } leeresFeld;
-
-#define MAX_LEERE_FLDER 81
-leeresFeld leereFelder[81]; //array enthält zu bearbeitende felder (funktioniert wie stack)
-static int testFeldIndex = -1; //index, auf welchem feld sich der algorithmus grade befindet
-
-static char* sudoku = NULL; //sudoku buffer für algorithmus
-
 
 //Löser in extra "initialisieren" und "beenden" methode aufgeteilt, um in main / dem aufrufendem das trennen von lösen, printen, usw zu ermöglichen
 

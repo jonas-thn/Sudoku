@@ -169,6 +169,14 @@ char* getZahlen() //zahlen array getter
 	return zahlen;
 }
 
+void zahlenBufferBeladen(char* buffer)
+{
+	for (int i = 0; i < BREITE*HÖHE; i++)
+	{
+		zahlen[i] = buffer[i];
+	}
+}
+
 int getLänge() //länge sollte 9x9 = 81 sein
 {
 	return (BREITE * HÖHE);

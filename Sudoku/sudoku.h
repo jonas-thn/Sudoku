@@ -37,6 +37,7 @@ void setEditierbarElement(int x, int y, char element); //editierbar-element sett
 char getEditierbarElement(int x, int y); //editierbar-element getter
 
 char* getZahlen(); //zahlen array getter
+void zahlenBufferBeladen(char* buffer);
 int getLänge(); //länge getter
 char* getEditierbar(); //editierbar array getter
 

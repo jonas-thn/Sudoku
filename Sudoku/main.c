@@ -21,18 +21,52 @@ spalte = x
 zeile = y							
 */
 
-int mainMenü()
+static int mainMenü()
 {
 	while (1) //neu auswahl schlefe
 	{
 		int auswahl1 = dateiAuswahl(); //datei auswhlen menü
 
-		datei dateiAuswahl = getDateinListeElement(dateiFinden(auswahl1)); //datei auswahl pfad speichern
+		 //datei auswahl pfad speichern
+		datei dateiAuswahl = getDateinListeElement(dateiFinden(auswahl1));
 
-		//zahlen von datei in sudoku laden
-		if (zahlenLaden(getZahlen(), dateiAuswahl.originalPfad, getEditierbar(), dateiAuswahl.speicherPfad) == -1)
+		if(dateiAuswahl.nummer == NEU_GENERIEREN_NUM)
 		{
-			return -1; //schlechtes ende
+			int schwierigkeit = 0;
+			int test = 0;
+
+			while ((test != 1) || (schwierigkeit > 5) || (schwierigkeit < 1))
+			{
+				printf("Wähle die Schwierigkeit aus (1-5): ");
+				test = scanf("%d", &schwierigkeit);
+				printf("\n");
+				printf("Falsche Eingabe, versuche es erneut!");
+				while (fgetc(stdin) != '\n');
+			}
+
+			generatorInitialisieren();
+
+			sudokuGenerieren(schwierigkeit);
+
+			zahlenBufferBeladen(getGeneriertesSudoku());
+
+			generatorDateiManager(dateiAuswahl.originalPfad, dateiAuswahl.speicherPfad, getZahlen());
+
+			generatorBeenden();
+
+			//zahlen von datei in sudoku laden
+			if (zahlenLaden(getZahlen(), dateiAuswahl.originalPfad, getEditierbar(), dateiAuswahl.speicherPfad) == -1)
+			{
+				return -1; //schlechtes ende
+			}
+		}
+		else
+		{
+			//zahlen von datei in sudoku laden
+			if (zahlenLaden(getZahlen(), dateiAuswahl.originalPfad, getEditierbar(), dateiAuswahl.speicherPfad) == -1)
+			{
+				return -1; //schlechtes ende
+			}
 		}
 
 		resetUndo();
@@ -103,8 +137,6 @@ int mainMenü()
 				while (fgetc(stdin) != '\n'); //stdin buffer löschen + auf enter warten
 
 				system("cls");
-
-				break;
 			}
 			else if (auswahl2 == 6)
 			{
@@ -124,32 +156,21 @@ int main(void)
 {
 	system("chcp 1252 > NUL"); 
 
-	////sudoku initialisieren (malloc, usw...)
-	//if (initialisieren() == -1)
-	//{
-	//	fprintf(stderr, "INIT fehlgeschlagen!");
-	//	exit(1);
-	//}
+	//sudoku initialisieren (malloc, usw...)
+	if (initialisieren() == -1)
+	{
+		fprintf(stderr, "INIT fehlgeschlagen!");
+		exit(1);
+	}
 
-	////main menü auswahl usw...
-	//if (mainMenü() == -1)
-	//{
-	//	fprintf(stderr, "MENÜ fehlgeschlagen!");
-	//	exit(1);
-	//}
+	//main menü auswahl usw...
+	if (mainMenü() == -1)
+	{
+		fprintf(stderr, "MENÜ fehlgeschlagen!");
+		exit(1);
+	}
 
-	//beenden(); //program aufräumen (free, usw...)
-
-
-
-	generatorInitialisieren();
-
-	sudokuGenerieren(5);
-
-	printGeneriertesSudoku();
-
-	generatorBeenden();
-
+	beenden(); //program aufräumen (free, usw...)
 
 	return 0;
 }

@@ -25,6 +25,9 @@ void setGeneratorElement(int x, int y, char element); //element setter
 char getGeneratorElement(int x, int y); //element getter 
 
 void generatorSudokuLeeren();
+char* getGeneriertesSudoku();
+
+int generatorDateiManager(char* originalPfad, char* dateiPfad, char* zahlen);
 
 int sudokuGenerieren(int schwierigkeit);
 

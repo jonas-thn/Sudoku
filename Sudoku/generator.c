@@ -25,6 +25,58 @@ void generatorSudokuLeeren()
 	}
 }
 
+char* getGeneriertesSudoku()
+{
+	return sudoku;
+}
+
+int generatorDateiManager(char* originalPfad, char* dateiPfad, char* zahlen)
+{
+	FILE* datei; //file pointer
+
+	datei = fopen(originalPfad, "w"); //datei öffnen
+
+	if (datei == NULL) //checken ob es funktioniert hat
+	{
+		fprintf(stderr, "datei öffnen null error");
+		return -1;
+	}
+
+	for (int i = 0; i < BREITE*HÖHE; i++) //für array länge (81 zeichen) loop
+	{
+		if (i % 9 == 0) //nach jedem neunten zeichen ein zeilenumbruch für lesbarkeit
+		{
+			fputc('\n', datei); //zeilenumbruch
+		}
+
+		fputc(zahlen[i], datei); //char von zahlen array in datei schreiben
+	}
+
+	fclose(datei); //datei schließen
+
+	datei = fopen(dateiPfad, "w"); //datei öffnen
+
+	if (datei == NULL) //checken ob es funktioniert hat
+	{
+		fprintf(stderr, "datei öffnen null error");
+		return -1;
+	}
+
+	for (int i = 0; i < BREITE * HÖHE; i++) //für array länge (81 zeichen) loop
+	{
+		if (i % 9 == 0) //nach jedem neunten zeichen ein zeilenumbruch für lesbarkeit
+		{
+			fputc('\n', datei); //zeilenumbruch
+		}
+
+		fputc(zahlen[i], datei); //char von zahlen array in datei schreiben
+	}
+
+	fclose(datei); //datei schließen
+
+	return 0; //alles gut
+}
+
 int sudokuGenerieren(int schwierigkeit) //schwierigkeit 1-5
 {
 	zufälligGefülltesSudokuGenerieren();

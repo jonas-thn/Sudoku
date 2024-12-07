@@ -1,15 +1,16 @@
 #include "input.h"
 
 //static variablem müssen in der c datei definiert werden
-#define dateinAnzahl (4) //anzahlt von sudoku datein 
-static const datei dateinListe[dateinAnzahl]; //liste an sudoku datein
+#define dateinAnzahl (6) //anzahlt von sudoku datein 
 
-//liste an datein
-const datei dateinListe[] = {
-	{.nummer = 1, .originalPfad = "Sudokus/Sudoku1.txt", .schwierigkeit = "Einfach", .speicherPfad="Sudokus/Sudoku1_Save.txt"},
-	{.nummer = 2, .originalPfad = "Sudokus/Sudoku2.txt", .schwierigkeit = "Mittel", .speicherPfad = "Sudokus/Sudoku2_Save.txt"},
-	{.nummer = 3, .originalPfad = "Sudokus/Sudoku3.txt", .schwierigkeit = "Schwer", .speicherPfad = "Sudokus/Sudoku3_Save.txt"},
-	{.nummer = 4, .originalPfad = "Sudokus/Sudoku4.txt", .schwierigkeit = "Unmöglich", .speicherPfad = "Sudokus/Sudoku4_Save.txt"},
+//liste an sudoku datein
+static const datei dateinListe[dateinAnzahl] = {
+	{.nummer = EINFACH_NUM, .originalPfad = "Sudokus/Sudoku1.txt", .schwierigkeit = "Einfach", .speicherPfad="Sudokus/Sudoku1_Save.txt"},
+	{.nummer = MITTEL_NUM, .originalPfad = "Sudokus/Sudoku2.txt", .schwierigkeit = "Mittel", .speicherPfad = "Sudokus/Sudoku2_Save.txt"},
+	{.nummer = SCHWER_NUM, .originalPfad = "Sudokus/Sudoku3.txt", .schwierigkeit = "Schwer", .speicherPfad = "Sudokus/Sudoku3_Save.txt"},
+	{.nummer = UNMÖGLICH_NUM, .originalPfad = "Sudokus/Sudoku4.txt", .schwierigkeit = "Unmöglich", .speicherPfad = "Sudokus/Sudoku4_Save.txt"},
+	{.nummer = GENERIERT_NUM, .originalPfad = "Sudokus/Sudoku5.txt", .schwierigkeit = "Generiert laden", .speicherPfad = "Sudokus/Sudoku5_Save.txt"},
+	{.nummer = NEU_GENERIEREN_NUM, .originalPfad = "Sudokus/Sudoku5.txt", .schwierigkeit = "Neu generieren", .speicherPfad = "Sudokus/Sudoku5_Save.txt"}
 };
 
 //datei per nummer anhand auswahl im menü finden

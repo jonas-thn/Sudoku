@@ -3,6 +3,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+enum
+{
+	EINFACH_NUM = 1,
+	MITTEL_NUM = 2,
+	SCHWER_NUM = 3,
+	UNMÖGLICH_NUM = 4,
+
+	GENERIERT_NUM = 5,
+	NEU_GENERIEREN_NUM = 6
+};
+
 //im menü auwählbare datei
 typedef struct datei
 {

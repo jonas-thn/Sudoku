@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//enum um nummern der sudoku datein sinn zu geben (falls man sie nochmal außerhalb des liste / struktur braucht)
 enum
 {
 	EINFACH_NUM = 1,
@@ -10,8 +11,8 @@ enum
 	SCHWER_NUM = 3,
 	UNMÖGLICH_NUM = 4,
 
-	GENERIERT_NUM = 5,
-	NEU_GENERIEREN_NUM = 6
+	GENERIERT_NUM = 5, //zuletzt generiertes sudoku laden
+	NEU_GENERIEREN_NUM = 6 //neues sudoku generieren und zuletzt generiertes sudoku überschreiben
 };
 
 //im menü auwählbare datei
@@ -30,7 +31,7 @@ int dateiFinden(int auswahl); //datei finden via eingabe nummer
 int dateiAuswahl(); //datei auswahl menü
 int aktionAuswahl(); //aktion auswahl menü
 void aktionEingabe(feldSetzenEvent setzen); //eingabe von aktion / zahl in feld setzen
-datei getDateinListeElement(int index);
+datei getDateinListeElement(int index); //element aus datei liste getter
 
 
 

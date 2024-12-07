@@ -86,7 +86,7 @@ int initialisieren()
 	return 0; //alles ok
 }
 
-void beenden() //free dynamischen speicher
+void beenden() //free dynamischen heap speicher
 {
 	free(zahlen);
 	free(editierbar);
@@ -169,7 +169,7 @@ char* getZahlen() //zahlen array getter
 	return zahlen;
 }
 
-void zahlenBufferBeladen(char* buffer)
+void zahlenBufferBeladen(char* buffer) //zahlen buffer element für element beladen
 {
 	for (int i = 0; i < BREITE*HÖHE; i++)
 	{
@@ -187,15 +187,15 @@ char* getEditierbar() //editierbar array getter
 	return editierbar;
 }
 
-void sudokuLeeren()
+void sudokuLeeren() //sudoku an allen stellen zu "." zurücksetzen, die vom benutzer eingegeben wurden und nicht vorgeschrieben waren
 {
 	for (int y = 0; y < HÖHE; y++)
 	{
 		for (int x = 0; x < BREITE; x++)
 		{
-			if (getEditierbarElement(x, y) == '1')
+			if (getEditierbarElement(x, y) == '1') //wenn editierbar
 			{
-				setZahlenElement(x, y, '.');
+				setZahlenElement(x, y, '.'); //auf leeres feld zurücksetzen
 			}
 		}
 	}
@@ -223,7 +223,7 @@ void printSudoku() //sudoku mit zahlen in console rpinten
 			}
 			else if (getEditierbarElement(x, y) == '1')
 			{
-				printf("%c ", getZahlenElement(x, y)); //x und y getauscht, sonst transformiert 
+				printf("%c ", getZahlenElement(x, y)); //element an x und y printen
 			}
 		}
 		printf("|\n"); //am ende eine letzte vertikale linie

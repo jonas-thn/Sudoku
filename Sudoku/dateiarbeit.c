@@ -65,7 +65,7 @@ int zahlenSpeichern(char* zahlen, const char* dateiname, int länge) //zahlen dat
 
 	for (int i = 0; i < länge; i++) //für array länge (81 zeichen) loop
 	{
-		if (i % 9 == 0) //nach jedem neunten zeichen ein zeilenumbruch für lesbarkeit
+		if (i % 9 == 0) //nach jedem 9. zeichen ein zeilenumbruch für lesbarkeit
 		{
 			fputc('\n', datei); //zeilenumbruch
 		}

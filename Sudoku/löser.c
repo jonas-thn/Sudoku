@@ -58,7 +58,7 @@ char getLöserElement(int x, int y) //sudoku element getter
 	return sudoku[BREITE * y + x];
 }
 
-char* getLöserSudokuBuffer()
+char* getLöserSudokuBuffer() //sudoku pointer zurückgeben (pointer referenz)
 {
 	return sudoku;
 }
@@ -221,14 +221,14 @@ void printGelöstesSudoku() //sudoku mit zahlen in console rpinten
 			{
 				printf("| "); //nach jedem Quadrat vertikale Linie
 			}
-			printf("%s%c%s ", FARBE_GRÜN, getLöserElement(x, y), FARBE_ZURÜCKSETZEN); //x und y getauscht, sonst transformiert 
+			printf("%s%c%s ", FARBE_GRÜN, getLöserElement(x, y), FARBE_ZURÜCKSETZEN); //element an x und y printen
 		}
 		printf("|\n"); //am ende eine letzte vertikale linie
 	}
 	printf("+ - - - + - - - + - - - +\n"); //am ende eine letzte horizonatle linie 
 }
 
-void löserBeenden() //sudoku löser beenden (free)
+void löserBeenden() //sudoku löser beenden - heap speicher freigeben
 {
 	free(sudoku);
 }

@@ -37,11 +37,11 @@ void setEditierbarElement(int x, int y, char element); //editierbar-element sett
 char getEditierbarElement(int x, int y); //editierbar-element getter
 
 char* getZahlen(); //zahlen array getter
-void zahlenBufferBeladen(char* buffer);
+void zahlenBufferBeladen(char* buffer); //zahlen buffer mit anderem buffer beladen (keine pointer referenz)
 int getLänge(); //länge getter
 char* getEditierbar(); //editierbar array getter
 
-void sudokuLeeren();
+void sudokuLeeren(); //sudoku zurücksetzen / leeren
 
 void beenden(); //program aufräumen (free, usw...)
 

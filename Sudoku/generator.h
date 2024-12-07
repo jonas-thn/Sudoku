@@ -12,32 +12,23 @@
 //...und man würde mit den funktions namen durcheinander kommen
 #include "löser.h" 
 
-//true & false definiert
-#define TRUE (1)
-#define FALSE (0)
-
-//farben 
-#define FARBE_ROT "\x1b[31m" 
-#define FARBE_GRÜN "\x1b[32m"
-#define FARBE_ZURÜCKSETZEN "\x1b[m"
+int generatorInitialisieren(); //sudoku generator wird initialisiert (und löser)
+void generatorBeenden(); //sudoku generator wird beendet (und löser)
 
 void setGeneratorElement(int x, int y, char element); //element setter 
 char getGeneratorElement(int x, int y); //element getter 
 
-void generatorSudokuLeeren();
-char* getGeneriertesSudoku();
+void generatorSudokuLeeren(); //gesamtes generator sudoku leeren
+char* getGeneriertesSudoku(); //generator sudoku getter
 
-int generatorDateiManager(char* originalPfad, char* dateiPfad, char* zahlen);
+int generatorDateiManager(char* originalPfad, char* dateiPfad, char* zahlen); //setzt nötige datein für generator
 
-int sudokuGenerieren(int schwierigkeit);
+int sudokuGenerieren(int schwierigkeit); //zufälliges sudoku generieren algorithmus
 
-void zufälligGefülltesSudokuGenerieren();
+void zufälligGefülltesSudokuGenerieren(); //zufälliges gefülltes sudoku wird generiert (zwischenschritt im algorithmus)
 
-void printGeneriertesSudoku();
+void printGeneriertesSudoku(); //generiertes sudoku printen (debug)
 
-int generatorInitialisieren();
-void generatorBeenden();
-
-int zahlVon1Bis9();
-char charVon1Bis9();
+int zahlVon1Bis9(); //zufällige zahl zwischen 1-9 als int
+char charVon1Bis9(); //zufällige zahl zwischen 1-9 als char
 

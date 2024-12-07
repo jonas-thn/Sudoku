@@ -29,7 +29,7 @@ int löserInitialisieren(const char* original); //löser initialisieren (malloc, d
 
 void setLöserElement(int x, int y, char element); //element setter 
 char getLöserElement(int x, int y); //element getter 
-char* getLöserSudokuBuffer();
+char* getLöserSudokuBuffer(); //löser sudoku buffer getter
 
 int zahlInZeile(int zeile, char zahl); //testen ob zahl bereits in zeile
 int zahlInSpalte(int spalte, char zahl); //testen ob zahl bereits in spalte

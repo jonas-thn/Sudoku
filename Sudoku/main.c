@@ -30,29 +30,38 @@ static int mainMenü()
 		 //datei auswahl pfad speichern
 		datei dateiAuswahl = getDateinListeElement(dateiFinden(auswahl1));
 
-		if(dateiAuswahl.nummer == NEU_GENERIEREN_NUM)
+		//normalerweise wird sudoku datei anhand von auswahl geladen
+		//außer wenn "neu generieren" ausgewählt wurde
+		if(dateiAuswahl.nummer == NEU_GENERIEREN_NUM) 
 		{
-			int schwierigkeit = 0;
-			int test = 0;
+			int schwierigkeit = 0; //schwierigkeitsgrad des generierten sudokus
+			int test = 0; //scanf rückgabe test
 
-			while ((test != 1) || (schwierigkeit > 5) || (schwierigkeit < 1))
+			while ((test != 1) || (schwierigkeit > 5) || (schwierigkeit < 1)) //testen ob eingabe fehlerhaft
 			{
 				printf("Wähle die Schwierigkeit aus (1-5): ");
-				test = scanf("%d", &schwierigkeit);
-				printf("\n");
-				printf("Falsche Eingabe, versuche es erneut!");
-				while (fgetc(stdin) != '\n');
+				test = scanf("%d", &schwierigkeit); //Schwierigkeit eingabe
+
+				//wenn flache eingabe, fehler text anzeigen
+				//if statement eigendlich nicht nötig -> text nur angezeigt wenn while loop wiederhohlt wird und erneut bei scanf stoppt
+				//wenn richtige eingabe wird die console sowieso direkt geleert
+				if ((test != 1) || (schwierigkeit > 5) || (schwierigkeit < 1)) 
+				{
+					printf("\n");
+					printf("Falsche Eingabe, versuche es erneut!\n");
+				}
+				while (fgetc(stdin) != '\n'); //input buffer leeren
 			}
 
-			generatorInitialisieren();
+			generatorInitialisieren(); //generator initialisieren (und löser indirekt auch)
 
-			sudokuGenerieren(schwierigkeit);
+			sudokuGenerieren(schwierigkeit); //zufälliges sudoku entsprechend schwierigkeit generieren
 
-			zahlenBufferBeladen(getGeneriertesSudoku());
+			zahlenBufferBeladen(getGeneriertesSudoku()); //generiertes sudoku in zahlen buffer laden
 
-			generatorDateiManager(dateiAuswahl.originalPfad, dateiAuswahl.speicherPfad, getZahlen());
+			generatorDateiManager(dateiAuswahl.originalPfad, dateiAuswahl.speicherPfad, getZahlen()); //datein Sudoku5 und Sudoku5_save füllen / überschreiben
 
-			generatorBeenden();
+			generatorBeenden(); //generator beenden (und löser indirekt auch)
 
 			//zahlen von datei in sudoku laden
 			if (zahlenLaden(getZahlen(), dateiAuswahl.originalPfad, getEditierbar(), dateiAuswahl.speicherPfad) == -1)

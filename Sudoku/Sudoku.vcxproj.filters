@@ -30,7 +30,7 @@
     <ClCompile Include="löser.c">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="utility.c">
+    <ClCompile Include="generator.c">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -47,7 +47,7 @@
     <ClInclude Include="löser.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="utility.h">
+    <ClInclude Include="generator.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

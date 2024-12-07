@@ -128,18 +128,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dateiarbeit.c" />
+    <ClCompile Include="generator.c" />
     <ClCompile Include="input.c" />
     <ClCompile Include="löser.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="sudoku.c" />
-    <ClCompile Include="utility.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dateiarbeit.h" />
+    <ClInclude Include="generator.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="löser.h" />
     <ClInclude Include="sudoku.h" />
-    <ClInclude Include="utility.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

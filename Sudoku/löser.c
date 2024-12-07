@@ -48,21 +48,26 @@ int löserInitialisieren(const char* original)
 	fclose(datei); //datei schließen
 }
 
-void setSudokuElement(int x, int y, char element) //sudoku element setter
+void setLöserElement(int x, int y, char element) //sudoku element setter
 {
 	sudoku[BREITE * y + x] = element;
 }
 
-char getSudokuElement(int x, int y) //sudoku element getter
+char getLöserElement(int x, int y) //sudoku element getter
 {
 	return sudoku[BREITE * y + x];
+}
+
+char* getLöserSudokuBuffer()
+{
+	return sudoku;
 }
 
 int zahlInZeile(int zeile, char zahl) //test ob zahl bereits in zeile vorhanden ist
 {
 	for (int x = 0; x < BREITE; x++)
 	{
-		if (zahl == getSudokuElement(x, zeile)) //zeile ist y!!!
+		if (zahl == getLöserElement(x, zeile)) //zeile ist y!!!
 		{
 			return TRUE; //vorhanden
 		}
@@ -75,7 +80,7 @@ int zahlInSpalte(int spalte, char zahl) //test ob zahl bereits in spalte vorhand
 {
 	for (int y = 0; y < HÖHE; y++)
 	{
-		if (zahl == getSudokuElement(spalte, y)) //spalte == x
+		if (zahl == getLöserElement(spalte, y)) //spalte == x
 		{
 			return TRUE; //vorhanden
 		}
@@ -97,7 +102,7 @@ int zahlInQuadrat(int x, int y, char zahl) //x und y als index(0-8)
 	{
 		for (int x = 0; x < QUADRAT; x++)
 		{
-			char element = getSudokuElement(xStart + x, yStart + y);	// x und y offset vom ersten (oben links) element des ausgewählten quadrats
+			char element = getLöserElement(xStart + x, yStart + y);	// x und y offset vom ersten (oben links) element des ausgewählten quadrats
 																		
 			if (element == zahl) //test ob zahl vorhanden							
 			{															
@@ -126,7 +131,7 @@ int leereFelderFinden() //alle leeren / relevanten felder für den lösungs algori
 	{
 		for (int x = 0; x < BREITE; x++)
 		{
-			if (getSudokuElement(x, y) == '.') //testen ob element ein punkt / frei / bearbeitbar ist
+			if (getLöserElement(x, y) == '.') //testen ob element ein punkt / frei / bearbeitbar ist
 			{
 				leeresFeld tempFeld = { .x = x, .y = y, .zahl = '.', .startZahl=1}; //leeres feld struktur bauen
 				testFeldIndex++; //Index erhöhen
@@ -149,7 +154,7 @@ sudoku lösungs-algorithmus:
 -> wenn sudoku lösbar, endet schleife mit ausgefülltem sudoku (index >= felder)
 ->wenn sudoku nicht lösbar, endet schleife mit leerem sudoku (index < 0)
 */
-void sudokuLösen() 
+int sudokuLösen() 
 {
 	int leereFelderZumTesten = leereFelderFinden(); //alle bearbeitbaren felder finden & "leereFelder" array füllen
 
@@ -169,7 +174,7 @@ void sudokuLösen()
 			char zahlZuChar = (char)(testZahl + 48); //vonj zahl zu ASCII character konvertieren (weil sudoku mit chars als einträge arbeitet)
 			if (platzierenMöglich(feldTemp.x, feldTemp.y, zahlZuChar)) //testen ob aktuelle zahl platzierbar ist
 			{
-				setSudokuElement(feldTemp.x, feldTemp.y, zahlZuChar); //wenn ja, dann in sudoku platzieren
+				setLöserElement(feldTemp.x, feldTemp.y, zahlZuChar); //wenn ja, dann in sudoku platzieren
 
 				//änderung an aktuellem feld speichern
 				//startZahl = testZahl + 1 !!! WICHTIG -> es wird gespeichert, an welcher zahl die suche aufgehört hat
@@ -187,13 +192,18 @@ void sudokuLösen()
 
 		if(!gefunden) //wenn in gesamter suche kein feld gefunden, geht der algorithmus zurück
 		{
-			setSudokuElement(feldTemp.x, feldTemp.y, '.'); //aktuelles feld zurücksetzen ( '.' = leer )
+			setLöserElement(feldTemp.x, feldTemp.y, '.'); //aktuelles feld zurücksetzen ( '.' = leer )
 			leeresFeld feldRückgängig = { .x = feldTemp.x, .y = feldTemp.y, .zahl = '.', .startZahl = 1}; //start zahl wider auf 1 (suchbedingung für anderen zweig zurücksetzen)
 			leereFelder[testFeldIndex] = feldRückgängig; //in felder array setzen
 
 			testFeldIndex--; //index dekrementieren (zu vorherigem feld gehen)
 		}
+
 	}
+
+	//Wenn testfeldindex -1, dann unlösbar, sonst lösbar
+	return (testFeldIndex < 0 ? FALSE : TRUE);
+
 }
 
 void printGelöstesSudoku() //sudoku mit zahlen in console rpinten 
@@ -211,14 +221,14 @@ void printGelöstesSudoku() //sudoku mit zahlen in console rpinten
 			{
 				printf("| "); //nach jedem Quadrat vertikale Linie
 			}
-			printf("%s%c%s ", FARBE_GRÜN, getSudokuElement(x, y), FARBE_ZURÜCKSETZEN); //x und y getauscht, sonst transformiert 
+			printf("%s%c%s ", FARBE_GRÜN, getLöserElement(x, y), FARBE_ZURÜCKSETZEN); //x und y getauscht, sonst transformiert 
 		}
 		printf("|\n"); //am ende eine letzte vertikale linie
 	}
 	printf("+ - - - + - - - + - - - +\n"); //am ende eine letzte horizonatle linie 
 }
 
-int löserBeenden() //sudoku löser beenden (free)
+void löserBeenden() //sudoku löser beenden (free)
 {
 	free(sudoku);
 }

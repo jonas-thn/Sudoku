@@ -3,11 +3,15 @@
 /*
 keine abhängigkeiten der bibliotheken untereinader
 alle bibliotheken funktionieren für sich selbst und kommen lediglich in main zusammen
+
+!!! ausanahme:	-generator ist von löser abhängig, um ~150 zeilen an code wiederhohlung zu vermeiden
+				-lösungsalgorithmus wird benötigt um sudoku zu generieren
 */
 #include "sudoku.h"
 #include "dateiarbeit.h"
 #include "input.h"
 #include "löser.h"
+#include "generator.h"
 
 #pragma warning (disable: 4996) 
 
@@ -120,21 +124,32 @@ int main(void)
 {
 	system("chcp 1252 > NUL"); 
 
-	//sudoku initialisieren (malloc, usw...)
-	if (initialisieren() == -1)
-	{
-		fprintf(stderr, "INIT fehlgeschlagen!");
-		exit(1);
-	}
+	////sudoku initialisieren (malloc, usw...)
+	//if (initialisieren() == -1)
+	//{
+	//	fprintf(stderr, "INIT fehlgeschlagen!");
+	//	exit(1);
+	//}
 
-	//main menü auswahl usw...
-	if (mainMenü() == -1)
-	{
-		fprintf(stderr, "MENÜ fehlgeschlagen!");
-		exit(1);
-	}
+	////main menü auswahl usw...
+	//if (mainMenü() == -1)
+	//{
+	//	fprintf(stderr, "MENÜ fehlgeschlagen!");
+	//	exit(1);
+	//}
 
-	beenden(); //program aufräumen (free, usw...)
+	//beenden(); //program aufräumen (free, usw...)
+
+
+
+	generatorInitialisieren();
+
+	sudokuGenerieren(5);
+
+	printGeneriertesSudoku();
+
+	generatorBeenden();
+
 
 	return 0;
 }

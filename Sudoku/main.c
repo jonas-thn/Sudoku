@@ -3,16 +3,16 @@
 #include <stdio.h>
 
 /*
-keine abhängigkeiten der bibliotheken untereinader
-alle bibliotheken funktionieren für sich selbst und kommen lediglich in main zusammen
+keine abhaengigkeiten der bibliotheken untereinader
+alle bibliotheken funktionieren fuer sich selbst und kommen lediglich in main zusammen
 
-!!! ausanahme:	-generator ist von löser abhängig, um ~150 zeilen an code wiederhohlung zu vermeiden
-				-lösungsalgorithmus wird benötigt um sudoku zu generieren
+!!! ausanahme:	-generator ist von loeser abhaengig, um ~150 zeilen an code wiederhohlung zu vermeiden
+				-loesungsalgorithmus wird benoetigt um sudoku zu generieren
 */
 #include "sudoku.h"
 #include "dateiarbeit.h"
 #include "input.h"
-#include "löser.h"
+#include "loeser.h"
 #include "generator.h"
 
 #pragma warning (disable: 4996) 
@@ -35,29 +35,29 @@ void clearConsole() //cross platform clear console
 }
 
 
-int mainMenü()
+int mainMenue()
 {
 	while (1) //neu auswahl schlefe
 	{
-		int auswahl1 = dateiAuswahl(); //datei auswhlen menü
+		int auswahl1 = dateiAuswahl(); //datei auswhlen menue
 
 		 //datei auswahl pfad speichern
 		datei dateiAuswahl = getDateinListeElement(dateiFinden(auswahl1));
 
 		//normalerweise wird sudoku datei anhand von auswahl geladen
-		//außer wenn "neu generieren" ausgewählt wurde
+		//ausser wenn "neu generieren" ausgewaehlt wurde
 		if(dateiAuswahl.nummer == NEU_GENERIEREN) 
 		{
 			int schwierigkeit = 0; //schwierigkeitsgrad des generierten sudokus
-			int test = 0; //scanf rückgabe test
+			int test = 0; //scanf rueckgabe test
 
 			while ((test != 1) || (schwierigkeit > 5) || (schwierigkeit < 1)) //testen ob eingabe fehlerhaft
 			{
-				printf("Wähle die Schwierigkeit aus (1-5): ");
+				printf("Waehle die Schwierigkeit aus (1-5): ");
 				test = scanf("%d", &schwierigkeit); //Schwierigkeit eingabe
 
 				//wenn flache eingabe, fehler text anzeigen
-				//if statement eigendlich nicht nötig -> text nur angezeigt wenn while loop wiederhohlt wird und erneut bei scanf stoppt
+				//if statement eigendlich nicht noetig -> text nur angezeigt wenn while loop wiederhohlt wird und erneut bei scanf stoppt
 				//wenn richtige eingabe wird die console sowieso direkt geleert
 				if ((test != 1) || (schwierigkeit > 5) || (schwierigkeit < 1)) 
 				{
@@ -67,15 +67,15 @@ int mainMenü()
 				while (fgetc(stdin) != '\n'); //input buffer leeren
 			}
 
-			generatorInitialisieren(); //generator initialisieren (und löser indirekt auch)
+			generatorInitialisieren(); //generator initialisieren (und loeser indirekt auch)
 
-			sudokuGenerieren(schwierigkeit); //zufälliges sudoku entsprechend schwierigkeit generieren
+			sudokuGenerieren(schwierigkeit); //zufaelliges sudoku entsprechend schwierigkeit generieren
 
 			zahlenBufferBeladen(getGeneriertesSudoku()); //generiertes sudoku in zahlen buffer laden
 
-			generatorDateiManager(dateiAuswahl.originalPfad, dateiAuswahl.speicherPfad, getZahlen()); //datein Sudoku5 und Sudoku5_save füllen / überschreiben
+			generatorDateiManager(dateiAuswahl.originalPfad, dateiAuswahl.speicherPfad, getZahlen()); //datein Sudoku5 und Sudoku5_save fuellen / ueberschreiben
 
-			generatorBeenden(); //generator beenden (und löser indirekt auch)
+			generatorBeenden(); //generator beenden (und loeser indirekt auch)
 
 			//zahlen von datei in sudoku laden
 			if (zahlenLaden(getZahlen(), dateiAuswahl.originalPfad, getEditierbar(), dateiAuswahl.speicherPfad) == -1)
@@ -94,7 +94,7 @@ int mainMenü()
 
 		resetUndo();
 
-		//main menü schleife
+		//main menue schleife
 		while (1)
 		{
 			clearConsole(); //clear console
@@ -102,7 +102,7 @@ int mainMenü()
 			printSudoku(); //sudoku printen
 			printf("\n");
 
-			int auswahl2 = aktionAuswahl(); //wähle menü aktion aus
+			int auswahl2 = aktionAuswahl(); //waehle menue aktion aus
 
 			if (auswahl2 == 1) //eingabe 
 			{
@@ -110,23 +110,23 @@ int mainMenü()
 				clearConsole();
 				printSudoku(); //sudoku printen
 			}
-			else if (auswahl2 == 2) //speichern und neu auswählen
+			else if (auswahl2 == 2) //speichern und neu auswaehlen
 			{
 				clearConsole();
 				
 				//zahlen speichern in datei
-				if (zahlenSpeichern(getZahlen(), dateiAuswahl.speicherPfad, getLänge()) == -1)
+				if (zahlenSpeichern(getZahlen(), dateiAuswahl.speicherPfad, getLaenge()) == -1)
 				{
 					return -1; //schlechtes ende
 				}
 				
-				break; // geht in äußere schleife
+				break; // geht in aeussere schleife
 			}
 			else if (auswahl2 == 3) //speichern und programm beenden
 			{
 				//zahlen speichern in datei
 
-				if (zahlenSpeichern(getZahlen(), dateiAuswahl.speicherPfad, getLänge()) == -1)
+				if (zahlenSpeichern(getZahlen(), dateiAuswahl.speicherPfad, getLaenge()) == -1)
 				{
 					return -1; //schlchtes ende
 				}
@@ -135,29 +135,29 @@ int mainMenü()
 			}
 			else if (auswahl2 == 4) //UNDO
 			{
-				undo(); //letzten zug rückgängig machen
+				undo(); //letzten zug rueckgaengig machen
 			}
-			else if (auswahl2 == 5) //LÖSEN
+			else if (auswahl2 == 5) //LOESEN
 			{
-				löserInitialisieren(dateiAuswahl.originalPfad); //löser für ausgewähltes sudoku initialisieren (malloc, usw...)
+				loeserInitialisieren(dateiAuswahl.originalPfad); //loeser fuer ausgewaehltes sudoku initialisieren (malloc, usw...)
 
-				sudokuLösen(); //sudoku lösungs algorithmus
+				sudokuLoesen(); //sudoku loesungs algorithmus
 
 				clearConsole();
 
-				printf("Deine Lösung:\n");
+				printf("Deine Loesung:\n");
 				printSudoku(); //sudoku printen
 				printf("\n");
 
-				printf("Richtige Lösung:\n");
-				printGelöstesSudoku(); //gelöstes sudoku printen
+				printf("Richtige Loesung:\n");
+				printGeloestesSudoku(); //geloestes sudoku printen
 
-				löserBeenden(); //löser beenden (free)
+				loeserBeenden(); //loeser beenden (free)
 
 				printf("\n");
-				printf("Drücke \"Enter\" um urück zum Menü zu kommen!");
+				printf("Druecke \"Enter\" um zurueck zum Menue zu kommen!");
 
-				while (fgetc(stdin) != '\n'); //stdin buffer löschen + auf enter warten
+				while (fgetc(stdin) != '\n'); //stdin buffer loeschen + auf enter warten
 
 				clearConsole();
 			}
@@ -189,14 +189,14 @@ int main(void)
 		exit(1);
 	}
 
-	//main menü auswahl usw...
-	if (mainMenü() == -1)
+	//main menue auswahl usw...
+	if (mainMenue() == -1)
 	{
-		fprintf(stderr, "MENÜ fehlgeschlagen!");
+		fprintf(stderr, "MENUE fehlgeschlagen!");
 		exit(1);
 	}
 
-	beenden(); //program aufräumen (free, usw...)
+	beenden(); //program aufrauumen (free, usw...)
 
 	return 0;
 }

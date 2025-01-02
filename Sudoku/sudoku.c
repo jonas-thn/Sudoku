@@ -1,15 +1,15 @@
 #include "sudoku.h"
 
-//static variablem müssen in der c datei definiert werden
+//static variablem muessen in der c datei definiert werden
 static const int BREITE = 9;
-static const int HÖHE = 9;
+static const int HOEHE = 9;
 static const int QUADRAT = 3;
 
-static char* zahlen = NULL; //entählt zahlen 
+static char* zahlen = NULL; //entaehlt zahlen 
 static char* editierbar = NULL; //1 ist editierbar und 0 nicht
 
 #define UNDO_SPEICHER 100
-static undoFeld undoFelderStack[UNDO_SPEICHER]; //undo stack, um bis zu 100 züge zu speichern 
+static undoFeld undoFelderStack[UNDO_SPEICHER]; //undo stack, um bis zu 100 zuege zu speichern 
 static int undoIndex = -1; //oberstes element vom stack
 
 int aktionUndoSpeichern(int x, int y) //verheriges element + zug speichern
@@ -19,7 +19,7 @@ int aktionUndoSpeichern(int x, int y) //verheriges element + zug speichern
 		return -1; 
 	}
 
-	undoIndex++; //undoIndex erhöhen
+	undoIndex++; //undoIndex erhoehen
 	undoFeld undoTemp = { //undo struktur anlegen, um auf stack zu speichern
 		.x = x,
 		.y = y,
@@ -30,9 +30,9 @@ int aktionUndoSpeichern(int x, int y) //verheriges element + zug speichern
 	return 0;
 }
 
-int undo() //letzten zug rückgängig machen
+int undo() //letzten zug rueckgaengig machen
 {
-	if (undoIndex < 0) //testen ob überhaupt ein zug zum rückgängig machen existiert
+	if (undoIndex < 0) //testen ob ueberhaupt ein zug zum rueckgaengig machen existiert
 	{
 		return -1;
 	}
@@ -42,8 +42,8 @@ int undo() //letzten zug rückgängig machen
 	int y = undoTemp.y;
 	char zahl = undoTemp.zahl;
 
-	//x und y um 1 erhöhen (da feld setzen eine benutzer eingabe (1-9) und keinen index (0-8) erwartet) 
-	if (feldSetzen(++x, ++y, zahl, 0) == -1) //feld setzen (sollte immer möglich sein) 
+	//x und y um 1 erhoehen (da feld setzen eine benutzer eingabe (1-9) und keinen index (0-8) erwartet) 
+	if (feldSetzen(++x, ++y, zahl, 0) == -1) //feld setzen (sollte immer moeglich sein) 
 	{
 		return -1;
 	}
@@ -53,15 +53,15 @@ int undo() //letzten zug rückgängig machen
 	return 0;
 }
 
-void resetUndo() //undo funktionalität zurücksetzen
+void resetUndo() //undo funktionalitaet zuruecksetzen
 {
 	undoIndex = -1; //stack index wieder auf -1 (leer)
-	memset(undoFelderStack, 0, sizeof(undoFelderStack)); //stack mit 0 füllen
+	memset(undoFelderStack, 0, sizeof(undoFelderStack)); //stack mit 0 faellen
 }
 
 int initialisieren()
 {
-	zahlen = (char*)malloc(sizeof(char) * BREITE * HÖHE); //speicher für zahlen buffer
+	zahlen = (char*)malloc(sizeof(char) * BREITE * HOEHE); //speicher fuer zahlen buffer
 
 	if (zahlen == NULL) //test ob malloc funktioniert hat
 	{
@@ -69,7 +69,7 @@ int initialisieren()
 		return -1;
 	}
 
-	editierbar = (char*)malloc(sizeof(char) * BREITE * HÖHE); //speicher für editierbar array
+	editierbar = (char*)malloc(sizeof(char) * BREITE * HOEHE); //speicher fuer editierbar array
 
 	if (editierbar == NULL) //test ob malloc funktioniert hat
 	{
@@ -77,10 +77,10 @@ int initialisieren()
 		return -1;
 	}
 
-	for (int i = 0; i < BREITE * HÖHE; i++) //array inhalt füllen mit deafault werten
+	for (int i = 0; i < BREITE * HOEHE; i++) //array inhalt fuellen mit deafault werten
 	{
-		zahlen[i] = '.'; //zahlen array mit punkten füllen (initial)
-		editierbar[i] = '0'; //editierbar array mit 0 füllen (initial)
+		zahlen[i] = '.'; //zahlen array mit punkten fuellen (initial)
+		editierbar[i] = '0'; //editierbar array mit 0 fuellen (initial)
 	}
 
 	return 0; //alles ok
@@ -92,13 +92,13 @@ void beenden() //free dynamischen heap speicher
 	free(editierbar);
 }
 
-int feldSetzen(int x, int y, char zahl, int undoMöglich)
+int feldSetzen(int x, int y, char zahl, int undoMoeglich)
 {
 	x--; y--; //eingabe von nutzer (1-9) zu index (0-8) konvertieren
 
 	int zCheck = zahlCheck(zahl); //checken ob zahl valide
 	int xCheck = ((x >= 0) && (x < BREITE)); //checken ob x eingabe in breite
-	int yCheck = ((y >= 0) && (y < HÖHE)); //checken ob y eingabe in breite
+	int yCheck = ((y >= 0) && (y < HOEHE)); //checken ob y eingabe in breite
 
 	int editierbarCheck = -1;
 	if (getEditierbarElement(x, y) == '0') //testen ob feld nicht editierbar
@@ -117,7 +117,7 @@ int feldSetzen(int x, int y, char zahl, int undoMöglich)
 
 	if (zCheck && xCheck && yCheck && editierbarCheck) //nur setzen, wenn alle vorherigen tests bestanden
 	{
-		if (undoMöglich) //nur speichern, wenn undo möglich sein soll (um undo loop zu verhindern)  
+		if (undoMoeglich) //nur speichern, wenn undo moeglich sein soll (um undo loop zu verhindern)  
 		{
 			aktionUndoSpeichern(x, y); //wenn es sich bei dieser aktion nicht gerade um ein "undo" handelt, dann wird aktion auf undo stack gespeichert
 		}
@@ -130,8 +130,8 @@ int feldSetzen(int x, int y, char zahl, int undoMöglich)
 
 int zahlCheck(char zahl) //testen ob eingegebene zahl (char) passt
 {
-	char valideZahlen[] = { '1', '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '.'}; //mange an möglichen zahlen
-	int n = 10; //länge von valide Zahlen
+	char valideZahlen[] = { '1', '2' , '3' , '4' , '5' , '6' , '7' , '8' , '9', '.'}; //mange an moeglichen zahlen
+	int n = 10; //laenge von valide Zahlen
 
 	for (int i = 0; i < n; i++)
 	{
@@ -141,7 +141,7 @@ int zahlCheck(char zahl) //testen ob eingegebene zahl (char) passt
 		}
 	}
 
-	return FALSE; //nicht gültige eingabe
+	return FALSE; //nicht gueltige eingabe
 }
 
 void setZahlenElement(int x, int y, char element) //zahlen element setter
@@ -169,17 +169,17 @@ char* getZahlen() //zahlen array getter
 	return zahlen;
 }
 
-void zahlenBufferBeladen(char* buffer) //zahlen buffer element für element beladen
+void zahlenBufferBeladen(char* buffer) //zahlen buffer element fuer element beladen
 {
-	for (int i = 0; i < BREITE*HÖHE; i++)
+	for (int i = 0; i < BREITE*HOEHE; i++)
 	{
 		zahlen[i] = buffer[i];
 	}
 }
 
-int getLänge() //länge sollte 9x9 = 81 sein
+int getLaenge() //laenge sollte 9x9 = 81 sein
 {
-	return (BREITE * HÖHE);
+	return (BREITE * HOEHE);
 }
 
 char* getEditierbar() //editierbar array getter
@@ -187,15 +187,15 @@ char* getEditierbar() //editierbar array getter
 	return editierbar;
 }
 
-void sudokuLeeren() //sudoku an allen stellen zu "." zurücksetzen, die vom benutzer eingegeben wurden und nicht vorgeschrieben waren
+void sudokuLeeren() //sudoku an allen stellen zu "." zuruecksetzen, die vom benutzer eingegeben wurden und nicht vorgeschrieben waren
 {
-	for (int y = 0; y < HÖHE; y++)
+	for (int y = 0; y < HOEHE; y++)
 	{
 		for (int x = 0; x < BREITE; x++)
 		{
 			if (getEditierbarElement(x, y) == '1') //wenn editierbar
 			{
-				setZahlenElement(x, y, '.'); //auf leeres feld zurücksetzen
+				setZahlenElement(x, y, '.'); //auf leeres feld zuruecksetzen
 			}
 		}
 	}
@@ -203,7 +203,7 @@ void sudokuLeeren() //sudoku an allen stellen zu "." zurücksetzen, die vom benut
 
 void printSudoku() //sudoku mit zahlen in console rpinten 
 {
-	for (int y = 0; y < HÖHE; y++) //!!!!!! erst zeilen(spalte für spalte) füllen, dann spalten füllen -> sonst transponiert
+	for (int y = 0; y < HOEHE; y++) //!!!!!! erst zeilen(spalte fuer spalte) fuellen, dann spalten fuellen -> sonst transponiert
 	{
 		if (y % QUADRAT == 0) //nach jedem Quadrat horizontale linie
 		{
@@ -219,7 +219,7 @@ void printSudoku() //sudoku mit zahlen in console rpinten
 
 			if (getEditierbarElement(x, y) == '0')
 			{
-				printf("%s%c%s ",FARBE_ROT, getZahlenElement(x, y), FARBE_ZURÜCKSETZEN); //x und y getauscht, sonst transformiert 
+				printf("%s%c%s ",FARBE_ROT, getZahlenElement(x, y), FARBE_ZURUECKSETZEN); //x und y getauscht, sonst transformiert 
 			}
 			else if (getEditierbarElement(x, y) == '1')
 			{

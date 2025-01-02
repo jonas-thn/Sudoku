@@ -178,25 +178,46 @@ int mainMenue()
 int main(void)
 {
 	
-#ifdef _WIN32 || _WIN64
+#if defined(_WIN32) || defined(_WIN64)
 	system("chcp 1252 > NUL"); 
 #endif
 
-	//sudoku initialisieren (malloc, usw...)
-	if (initialisieren() == -1)
-	{
-		fprintf(stderr, "INIT fehlgeschlagen!");
-		exit(1);
-	}
+	printf("Content-Type: text/html\n\n");
+	printf("<HTML><HEAD><TITLE>Sudoku</TITLE></HEAD>\n");
+	printf("</BODY>\n");
+
+//	sudoku initialisieren (malloc, usw...)
+//	if (initialisieren() == -1)
+//	{
+//		fprintf(stderr, "INIT fehlgeschlagen!");
+//		exit(1);
+//	}
 
 	//main menue auswahl usw...
-	if (mainMenue() == -1)
+//	if (mainMenue() == -1)
+//	{
+//		fprintf(stderr, "MENUE fehlgeschlagen!");
+//		exit(1);
+//	}
+//
+//	beenden(); //program aufrauumen (free, usw...)
+	printf("<FORM ACTION=\"http://www.informatik.htw-dresden.de/~s88217/cgi-bin/Sudoku/Sudoku/sudoku.cgi\" METHOD=\"POST\">\n");
+	printf("<TABLE BORDER=\"1\">\n");
+	
+	for(int i = 0; i < 9; i++)
 	{
-		fprintf(stderr, "MENUE fehlgeschlagen!");
-		exit(1);
+		printf("<TR>\n");
+		for(int j = 0; j < 9; j++)
+		{
+			printf("<TD><INPUT TYPE=\"TEXT\" NAME=\"feld_%d_%d\" MAXLENGTH=\"1\" SIZE=\"1\" VALUE=\"%d\"></TD>\n", i, j, 1);
+		}
+		printf("</TR>\n");
 	}
-
-	beenden(); //program aufrauumen (free, usw...)
+	printf("</TABLE>\n");
+	printf("<BR>");
+	printf("<INPUT TYPE=\"SUBMIT\" VALUE=\"Test\">\n");
+	printf("</FORM>");
+	printf("</BODY></HTML>\n");
 
 	return 0;
 }

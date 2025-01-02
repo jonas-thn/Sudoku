@@ -21,7 +21,19 @@ spalte = x
 zeile = y							
 */
 
-static int mainMenü()
+void clearConsole() //cross platform clear console
+{
+#if defined(__unix__) || defined(__linux__)
+	system("clear");
+#elif defined(_WIN32) || defined(_WIN64)
+	system("cls");
+#else
+	printf("\033[H\033[J");
+#endif
+}
+
+
+int mainMenü()
 {
 	while (1) //neu auswahl schlefe
 	{
@@ -32,7 +44,7 @@ static int mainMenü()
 
 		//normalerweise wird sudoku datei anhand von auswahl geladen
 		//außer wenn "neu generieren" ausgewählt wurde
-		if(dateiAuswahl.nummer == NEU_GENERIEREN_NUM) 
+		if(dateiAuswahl.nummer == NEU_GENERIEREN) 
 		{
 			int schwierigkeit = 0; //schwierigkeitsgrad des generierten sudokus
 			int test = 0; //scanf rückgabe test
@@ -83,7 +95,7 @@ static int mainMenü()
 		//main menü schleife
 		while (1)
 		{
-			system("cls"); //clear console (nur auf windows)
+			clearConsole(); //clear console
 
 			printSudoku(); //sudoku printen
 			printf("\n");
@@ -93,12 +105,12 @@ static int mainMenü()
 			if (auswahl2 == 1) //eingabe 
 			{
 				aktionEingabe(feldSetzen); //feld setzen eingabe
-				system("cls");
+				clearConsole();
 				printSudoku(); //sudoku printen
 			}
 			else if (auswahl2 == 2) //speichern und neu auswählen
 			{
-				system("cls"); //nur windows
+				clearConsole();
 				
 				//zahlen speichern in datei
 				if (zahlenSpeichern(getZahlen(), dateiAuswahl.speicherPfad, getLänge()) == -1)
@@ -129,7 +141,7 @@ static int mainMenü()
 
 				sudokuLösen(); //sudoku lösungs algorithmus
 
-				system("cls");
+				clearConsole();
 
 				printf("Deine Lösung:\n");
 				printSudoku(); //sudoku printen
@@ -145,7 +157,7 @@ static int mainMenü()
 
 				while (fgetc(stdin) != '\n'); //stdin buffer löschen + auf enter warten
 
-				system("cls");
+				clearConsole();
 			}
 			else if (auswahl2 == 6)
 			{
@@ -163,7 +175,10 @@ static int mainMenü()
 
 int main(void)
 {
+	
+#ifdef _WIN32 || _WIN64
 	system("chcp 1252 > NUL"); 
+#endif
 
 	//sudoku initialisieren (malloc, usw...)
 	if (initialisieren() == -1)

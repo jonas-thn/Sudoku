@@ -4,15 +4,15 @@
 #include <stdlib.h>
 
 //enum um nummern der sudoku datein sinn zu geben (falls man sie nochmal außerhalb des liste / struktur braucht)
-enum
+enum SchwierigkeitOptionen
 {
-	EINFACH_NUM = 1,
-	MITTEL_NUM = 2,
-	SCHWER_NUM = 3,
-	UNMÖGLICH_NUM = 4,
+	SCHWIERIGKEIT_EINFACH = 1,
+	SCHWIERIGKEIT_MITTEL = 2,
+	SCHWIERIGKEIT_SCHWER = 3,
+	SCHWIERIGKEIT_UNMÖGLICH = 4,
 
-	GENERIERT_NUM = 5, //zuletzt generiertes sudoku laden
-	NEU_GENERIEREN_NUM = 6 //neues sudoku generieren und zuletzt generiertes sudoku überschreiben
+	SCHWIERIGKEIT_GENERIERT = 5, //zuletzt generiertes sudoku laden
+	NEU_GENERIEREN = 6 //neues sudoku generieren und zuletzt generiertes sudoku überschreiben
 };
 
 //im menü auwählbare datei

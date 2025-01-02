@@ -5,12 +5,12 @@
 
 //liste an sudoku datein
 static const datei dateinListe[dateinAnzahl] = {
-	{.nummer = EINFACH_NUM, .originalPfad = "Sudokus/Sudoku1.txt", .schwierigkeit = "Einfach", .speicherPfad="Sudokus/Sudoku1_Save.txt"},
-	{.nummer = MITTEL_NUM, .originalPfad = "Sudokus/Sudoku2.txt", .schwierigkeit = "Mittel", .speicherPfad = "Sudokus/Sudoku2_Save.txt"},
-	{.nummer = SCHWER_NUM, .originalPfad = "Sudokus/Sudoku3.txt", .schwierigkeit = "Schwer", .speicherPfad = "Sudokus/Sudoku3_Save.txt"},
-	{.nummer = UNMÖGLICH_NUM, .originalPfad = "Sudokus/Sudoku4.txt", .schwierigkeit = "Unmöglich", .speicherPfad = "Sudokus/Sudoku4_Save.txt"},
-	{.nummer = GENERIERT_NUM, .originalPfad = "Sudokus/Sudoku5.txt", .schwierigkeit = "Generiert laden", .speicherPfad = "Sudokus/Sudoku5_Save.txt"},
-	{.nummer = NEU_GENERIEREN_NUM, .originalPfad = "Sudokus/Sudoku5.txt", .schwierigkeit = "Neu generieren", .speicherPfad = "Sudokus/Sudoku5_Save.txt"}
+	{.nummer = SCHWIERIGKEIT_EINFACH, .originalPfad = "Sudokus/Sudoku1.txt", .schwierigkeit = "Einfach", .speicherPfad="Sudokus/Sudoku1_Save.txt"},
+	{.nummer = SCHWIERIGKEIT_MITTEL, .originalPfad = "Sudokus/Sudoku2.txt", .schwierigkeit = "Mittel", .speicherPfad = "Sudokus/Sudoku2_Save.txt"},
+	{.nummer = SCHWIERIGKEIT_SCHWER, .originalPfad = "Sudokus/Sudoku3.txt", .schwierigkeit = "Schwer", .speicherPfad = "Sudokus/Sudoku3_Save.txt"},
+	{.nummer = SCHWIERIGKEIT_UNMÖGLICH, .originalPfad = "Sudokus/Sudoku4.txt", .schwierigkeit = "Unmöglich", .speicherPfad = "Sudokus/Sudoku4_Save.txt"},
+	{.nummer = SCHWIERIGKEIT_GENERIERT, .originalPfad = "Sudokus/Sudoku5.txt", .schwierigkeit = "Generiert laden", .speicherPfad = "Sudokus/Sudoku5_Save.txt"},
+	{.nummer = NEU_GENERIEREN, .originalPfad = "Sudokus/Sudoku5.txt", .schwierigkeit = "Neu generieren", .speicherPfad = "Sudokus/Sudoku5_Save.txt"}
 };
 
 //datei per nummer anhand auswahl im menü finden

@@ -5,6 +5,7 @@
 #include <stdlib.h>
 
 #include "./lib/cgi-lib.h"
+#include "./lib/cgi-priv.h"
 
 /*
 keine abhaengigkeiten der bibliotheken untereinader
@@ -29,6 +30,7 @@ zeile = y
 void auswahlMenue()
 {
 	printf("<FORM ACTION=\"\" METHOD=\"POST\">\n");
+	printSudoku();
 	printf("<LABEL FOR=\"auswahl\">Was moechtest du machen:</LABEL>\n");
 	printf("<SELECT NAME=\"auswahl\" ID=\"auswahl\">\n");
 		printf("<OPTION VALUE=\"speichern\">Speichern</OPTION>\n");
@@ -47,7 +49,6 @@ void einfachQuery(char* content)
 	char* speicherPfad = "./Sudokus/Sudoku1_Save.txt";
 
 	zahlenLaden(getZahlen(), originalPfad, getEditierbar(), speicherPfad);
-	printSudoku();
 	auswahlMenue();
 	printf(content);
 }
@@ -58,7 +59,6 @@ void mittelQuery(char* content)
 	char* speicherPfad = "./Sudokus/Sudoku2_Save.txt";
 
 	zahlenLaden(getZahlen(), originalPfad, getEditierbar(), speicherPfad);
-	printSudoku();
 	auswahlMenue();
 	printf(content);
 }
@@ -69,7 +69,6 @@ void schwerQuery(char* content)
 	char* speicherPfad = "./Sudokus/Sudoku3_Save.txt";
 
 	zahlenLaden(getZahlen(), originalPfad, getEditierbar(), speicherPfad);
-	printSudoku();
 	auswahlMenue();
 	printf(content);
 }
@@ -80,7 +79,6 @@ void unmoeglichQuery(char* content)
 	char* speicherPfad = "./Sudokus/Sudoku4_Save.txt";
 
 	zahlenLaden(getZahlen(), originalPfad, getEditierbar(), speicherPfad);
-	printSudoku();
 	auswahlMenue();
 	printf(content);
 }
@@ -91,9 +89,9 @@ void generiertQuery(char* content)
 	char* speicherPfad = "./Sudokus/Sudoku5_Save.txt";
 
 	zahlenLaden(getZahlen(), originalPfad, getEditierbar(), speicherPfad);
-	printSudoku();
-	
+		
 	printf("<FORM ACTION=\"\" METHOD=\"POST\">\n");
+	printSudoku();
 	printf("<LABEL FOR=\"auswahl\">Was moechtest du machen:</LABEL>\n");
 	printf("<SELECT NAME=\"auswahl\" ID=\"auswahl\">\n");
 		printf("<OPTION VALUE=\"speichern\">Speichern</OPTION>\n");
@@ -116,8 +114,10 @@ void startQuery()
 	printf(start);
 }
 
-void queryAuswahl(char* content)
+void queryAuswahl(LIST* daten)
 {
+	char* content = find_val(daten, "auswahl");
+
 	char* env;
 	
 	if(env = getenv("QUERY_STRING"))
@@ -150,46 +150,8 @@ void queryAuswahl(char* content)
 
 }
 
-
-//void queryAuswahlLib(LIST* data)
-//{
-//	char* content = find_val(data, "auswahl");
-//	
-//	char* env;
-//	
-//	if(env = getenv("QUERY_STRING"))
-//	{
-//		if(strcmp("einfach", env) == 0)
-//		{
-//			einfachQuery(content);
-//		}
-//		else if(strcmp("mittel", env) == 0)
-//		{
-//			mittelQuery(content);
-//		}
-//		else if(strcmp("schwer", env) == 0)
-//		{
-//			schwerQuery(content);
-//		}
-//		else if(strcmp("unmoeglich", env) == 0)
-//		{
-//			unmoeglichQuery(content);
-//		}
-//		else if(strcmp("generiert", env) == 0)
-//		{
-//			generiertQuery(content);
-//		}
-//		else
-//		{
-//			startQuery();
-//		}
-//	}
-//}
-
-
 int main(void)
-{
-
+{	
 	printf("Content-Type: text/html\n\n");
 	printf("<HTML><HEAD><TITLE>Sudoku</TITLE></HEAD>\n");
 	printf("</BODY>\n");
@@ -202,27 +164,20 @@ int main(void)
 		exit(1);
 	}
 
-//	LIST* data;
-//	data = cgi_input_parse();
-//	queryAuswahlLib(data);
+	LIST* daten = NULL;
 
-	
-	char* contentLengthString = getenv("CONTENT_LENGTH");
-	if(contentLengthString != NULL)
+	if(getenv("CONTENT_STRING") != NULL)
 	{
-		int contentLength = atoi(contentLengthString);
-		char data[contentLength + 1];
-		fread(data, 1, contentLength, stdin);
-		data[contentLength] = '\0';			
-		queryAuswahl(data);		
+		daten = cgi_input_parse();
+
+		queryAuswahl(daten);
+	
+		list_clear(daten);
 	}
 	else
 	{
 		queryAuswahl(NULL);
 	}
-	
-	
-	//list_clear(data);
 
 	printf("</BODY></HTML>\n");
 

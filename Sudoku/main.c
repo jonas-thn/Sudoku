@@ -114,12 +114,10 @@ void startQuery()
 	printf(start);
 }
 
-void queryAuswahl(LIST* daten)
+void queryAuswahl(char* content)
 {
-	char* content = find_val(daten, "auswahl");
-
 	char* env;
-	
+
 	if(env = getenv("QUERY_STRING"))
 	{
 		if(strcmp("einfach", env) == 0)
@@ -164,20 +162,32 @@ int main(void)
 		exit(1);
 	}
 
-	LIST* daten = NULL;
-
-	if(getenv("CONTENT_STRING") != NULL)
+	char* contentLengthString = getenv("CONTENT_LENGTH");
+	if(contentLengthString != NULL)
 	{
-		daten = cgi_input_parse();
-
+		int contentLength = atoi(contentLengthString);
+		char daten[contentLength + 1];
+		fread(daten, 1, contentLength, stdin);
+		daten[contentLength] = '\0';
 		queryAuswahl(daten);
-	
-		list_clear(daten);
 	}
 	else
 	{
 		queryAuswahl(NULL);
 	}
+	
+
+//BIBLIOTHEK HAT MEMORY LEAKS------------------------------
+//	LIST* daten
+
+//	daten = cgi_input_parse();
+
+//	queryAuswahl(daten);
+	
+//	list_clear(daten);
+	
+//----------------------------------------------------------
+
 
 	printf("</BODY></HTML>\n");
 

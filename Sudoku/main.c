@@ -4,6 +4,8 @@
 #include <string.h>
 #include <stdlib.h>
 
+#include "./lib/cgi-lib.h"
+
 /*
 keine abhaengigkeiten der bibliotheken untereinader
 alle bibliotheken funktionieren fuer sich selbst und kommen lediglich in main zusammen
@@ -24,60 +26,166 @@ spalte = x
 zeile = y							
 */
 
-void einfachQuery()
+void auswahlMenue()
 {
-	char* einfach = "<A href=\"sudoku.cgi?\">Zurueck</A>";
+	printf("<FORM ACTION=\"\" METHOD=\"POST\">\n");
+	printf("<LABEL FOR=\"auswahl\">Was moechtest du machen:</LABEL>\n");
+	printf("<SELECT NAME=\"auswahl\" ID=\"auswahl\">\n");
+		printf("<OPTION VALUE=\"speichern\">Speichern</OPTION>\n");
+		printf("<OPTION VALUE=\"undo\">Undo</OPTION>\n");
+		printf("<OPTION VALUE=\"loesen\">Loesen</OPTION>\n");
+		printf("<OPTION VALUE=\"zuruecksetzen\">Zuruecksetzen</OPTION>\n");
+	printf("</SELECT>\n");
+	printf("<BR>\n");
+	printf("<BUTTON TYPE=\"SUBMIT\">Auswhaehlen</BUUTON>\n");
+	printf("</FORM>\n");
+}
 
+void einfachQuery(char* content)
+{	
 	char* originalPfad = "./Sudokus/Sudoku1.txt";
 	char* speicherPfad = "./Sudokus/Sudoku1_Save.txt";
 
 	zahlenLaden(getZahlen(), originalPfad, getEditierbar(), speicherPfad);
 	printSudoku();
-
-	printf(einfach);
+	auswahlMenue();
+	printf(content);
 }
 
-void mittelQuery()
+void mittelQuery(char* content)
 {
-	char* mittel = "<A href=\"sudoku.cgi?\">Zurueck</A>";
+	char* originalPfad = "./Sudokus/Sudoku2.txt";
+	char* speicherPfad = "./Sudokus/Sudoku2_Save.txt";
 
-	printf(mittel);
+	zahlenLaden(getZahlen(), originalPfad, getEditierbar(), speicherPfad);
+	printSudoku();
+	auswahlMenue();
+	printf(content);
 }
 
-void schwerQuery()
+void schwerQuery(char* content)
 {
-	char* schwer = "<A href=\"sudoku.cgi?\">Zurueck</A>";
+	char* originalPfad = "./Sudokus/Sudoku3.txt";
+	char* speicherPfad = "./Sudokus/Sudoku3_Save.txt";
 
-	printf(schwer);
+	zahlenLaden(getZahlen(), originalPfad, getEditierbar(), speicherPfad);
+	printSudoku();
+	auswahlMenue();
+	printf(content);
 }
 
-void unmoeglichQuery()
+void unmoeglichQuery(char* content)
 {
-	char* unmoeglich = "<A href=\"sudoku.cgi?\">Zurueck</A>";
+	char* originalPfad = "./Sudokus/Sudoku4.txt";
+	char* speicherPfad = "./Sudokus/Sudoku4_Save.txt";
 
-	printf(unmoeglich);
+	zahlenLaden(getZahlen(), originalPfad, getEditierbar(), speicherPfad);
+	printSudoku();
+	auswahlMenue();
+	printf(content);
 }
 
-void generiertQuery()
+void generiertQuery(char* content)
 {
-	char* generiert = "<A href=\"sudoku.cgi?\">Zurueck</A>";
+	char* originalPfad = "./Sudokus/Sudoku5.txt";
+	char* speicherPfad = "./Sudokus/Sudoku5_Save.txt";
 
-	printf(generiert);
-}
-
-void neuQuery()
-{
-	char* neu = "<A href=\"sudoku.cgi?\">Zurueck</A>";
-
-	printf(neu);
+	zahlenLaden(getZahlen(), originalPfad, getEditierbar(), speicherPfad);
+	printSudoku();
+	
+	printf("<FORM ACTION=\"\" METHOD=\"POST\">\n");
+	printf("<LABEL FOR=\"auswahl\">Was moechtest du machen:</LABEL>\n");
+	printf("<SELECT NAME=\"auswahl\" ID=\"auswahl\">\n");
+		printf("<OPTION VALUE=\"speichern\">Speichern</OPTION>\n");
+		printf("<OPTION VALUE=\"undo\">Undo</OPTION>\n");
+		printf("<OPTION VALUE=\"loesen\">Loesen</OPTION>\n");
+		printf("<OPTION VALUE=\"zuruecksetzen\">Zuruecksetzen</OPTION>\n");
+		printf("<OPTION VALUE=\"neu\">Neu generieren</OPTION>\n");
+	printf("</SELECT>\n");
+	printf("<BR>\n");
+	printf("<BUTTON TYPE=\"SUBMIT\">Auswhaehlen</BUUTON>\n");
+	printf("</FORM>\n");
+	
+	printf(content);
 }
 
 void startQuery()
 {
-	char* start = "Waehle eine Option aus:<BR><A href=\"sudoku.cgi?einfach\">Einfach</A><BR><A href=\"sudoku.cgi?mittel\">Mittel</A><BR><A href=\"sudoku.cgi?schwer\">Schwer</A><BR><A href=\"sudoku.cgi?unmoeglich\">Unmoeglich</A><BR><A href=\"sudoku.cgi?generiert\">Generiert</A><BR><A href=\"sudoku.cgi?neu\">Neu</A>";
+	char* start = "Waehle eine Option aus:<BR><A href=\"sudoku.cgi?einfach\">Einfach</A><BR><A href=\"sudoku.cgi?mittel\">Mittel</A><BR><A href=\"sudoku.cgi?schwer\">Schwer</A><BR><A href=\"sudoku.cgi?unmoeglich\">Unmoeglich</A><BR><A href=\"sudoku.cgi?generiert\">Generiert</A>";
 	
 	printf(start);
 }
+
+void queryAuswahl(char* content)
+{
+	char* env;
+	
+	if(env = getenv("QUERY_STRING"))
+	{
+		if(strcmp("einfach", env) == 0)
+		{
+			einfachQuery(content);
+		}			
+		else if(strcmp("mittel", env) == 0)
+		{				
+			mittelQuery(content);
+		}
+		else if(strcmp("schwer", env) == 0)
+		{
+			schwerQuery(content);
+		}
+		else if(strcmp("unmoeglich", env) == 0)
+		{
+			unmoeglichQuery(content);
+		}
+		else if(strcmp("generiert", env) == 0)
+		{
+			generiertQuery(content);
+		}
+		else
+		{
+			startQuery();
+		}
+	}
+
+}
+
+
+//void queryAuswahlLib(LIST* data)
+//{
+//	char* content = find_val(data, "auswahl");
+//	
+//	char* env;
+//	
+//	if(env = getenv("QUERY_STRING"))
+//	{
+//		if(strcmp("einfach", env) == 0)
+//		{
+//			einfachQuery(content);
+//		}
+//		else if(strcmp("mittel", env) == 0)
+//		{
+//			mittelQuery(content);
+//		}
+//		else if(strcmp("schwer", env) == 0)
+//		{
+//			schwerQuery(content);
+//		}
+//		else if(strcmp("unmoeglich", env) == 0)
+//		{
+//			unmoeglichQuery(content);
+//		}
+//		else if(strcmp("generiert", env) == 0)
+//		{
+//			generiertQuery(content);
+//		}
+//		else
+//		{
+//			startQuery();
+//		}
+//	}
+//}
+
 
 int main(void)
 {
@@ -93,40 +201,28 @@ int main(void)
 		fprintf(stderr, "INIT fehlgeschlagen!");
 		exit(1);
 	}
-					
-	char* env;
 
-	if(env = getenv("QUERY_STRING"))
+//	LIST* data;
+//	data = cgi_input_parse();
+//	queryAuswahlLib(data);
+
+	
+	char* contentLengthString = getenv("CONTENT_LENGTH");
+	if(contentLengthString != NULL)
 	{
-		if(strcmp("einfach", env) == 0)
-		{
-			einfachQuery();
-		}
-		else if(strcmp("mittel", env) == 0)
-		{
-			mittelQuery();
-		}
-		else if(strcmp("schwer", env) == 0)
-		{
-			schwerQuery();
-		}
-		else if(strcmp("unmoeglich", env) == 0)
-		{
-			unmoeglichQuery();
-		}
-		else if(strcmp("generiert", env) == 0)
-		{
-			generiertQuery();
-		}
-		else if(strcmp("neu", env) == 0)
-		{
-			neuQuery();
-		}
-		else
-		{
-			startQuery();
-		}
+		int contentLength = atoi(contentLengthString);
+		char data[contentLength + 1];
+		fread(data, 1, contentLength, stdin);
+		data[contentLength] = '\0';			
+		queryAuswahl(data);		
 	}
+	else
+	{
+		queryAuswahl(NULL);
+	}
+	
+	
+	//list_clear(data);
 
 	printf("</BODY></HTML>\n");
 

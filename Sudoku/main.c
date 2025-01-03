@@ -26,38 +26,57 @@ zeile = y
 
 void einfachQuery()
 {
+	char* einfach = "<A href=\"sudoku.cgi?\">Zurueck</A>";
+
+	char* originalPfad = "./Sudokus/Sudoku1.txt";
+	char* speicherPfad = "./Sudokus/Sudoku1_Save.txt";
+
+	zahlenLaden(getZahlen(), originalPfad, getEditierbar(), speicherPfad);
+	printSudoku();
+
 	printf(einfach);
 }
 
 void mittelQuery()
 {
+	char* mittel = "<A href=\"sudoku.cgi?\">Zurueck</A>";
+
 	printf(mittel);
 }
 
 void schwerQuery()
 {
+	char* schwer = "<A href=\"sudoku.cgi?\">Zurueck</A>";
+
 	printf(schwer);
 }
 
 void unmoeglichQuery()
 {
+	char* unmoeglich = "<A href=\"sudoku.cgi?\">Zurueck</A>";
+
 	printf(unmoeglich);
 }
 
 void generiertQuery()
 {
+	char* generiert = "<A href=\"sudoku.cgi?\">Zurueck</A>";
+
 	printf(generiert);
 }
 
 void neuQuery()
 {
+	char* neu = "<A href=\"sudoku.cgi?\">Zurueck</A>";
+
 	printf(neu);
 }
 
 void startQuery()
 {
 	char* start = "Waehle eine Option aus:<BR><A href=\"sudoku.cgi?einfach\">Einfach</A><BR><A href=\"sudoku.cgi?mittel\">Mittel</A><BR><A href=\"sudoku.cgi?schwer\">Schwer</A><BR><A href=\"sudoku.cgi?unmoeglich\">Unmoeglich</A><BR><A href=\"sudoku.cgi?generiert\">Generiert</A><BR><A href=\"sudoku.cgi?neu\">Neu</A>";
-
+	
+	printf(start);
 }
 
 int main(void)
@@ -74,14 +93,7 @@ int main(void)
 		fprintf(stderr, "INIT fehlgeschlagen!");
 		exit(1);
 	}
-
-	char* einfach = "<A href=\"sudoku.cgi?\">Zurueck</A>";
-	char* mittel = "<A href=\"sudoku.cgi?\">Zurueck</A>";
-	char* schwer = "<A href=\"sudoku.cgi?\">Zurueck</A>";
-	char* unmoeglich = "<A href=\"sudoku.cgi?\">Zurueck</A>";
-	char* generiert = "<A href=\"sudoku.cgi?\">Zurueck</A>";
-	char* neu = "<A href=\"sudoku.cgi?\">Zurueck</A>";
-
+					
 	char* env;
 
 	if(env = getenv("QUERY_STRING"))

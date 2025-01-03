@@ -203,31 +203,25 @@ void sudokuLeeren() //sudoku an allen stellen zu "." zuruecksetzen, die vom benu
 
 void printSudoku() //sudoku mit zahlen in console rpinten 
 {
+	printf("<FORM ACTION=\"http://www.informatik.htw-dresden.de/~s88217/cgi-bin/Sudoku/Sudoku/sudoku.cgi\" METHOD=\"POST\">\n");
+	printf("<TABLE BORDER=\"1\">\n");
+	
 	for (int y = 0; y < HOEHE; y++) //!!!!!! erst zeilen(spalte fuer spalte) fuellen, dann spalten fuellen -> sonst transponiert
-	{
-		if (y % QUADRAT == 0) //nach jedem Quadrat horizontale linie
-		{
-			printf("+ - - - + - - - + - - - +\n");
-		}
-		
+	{	
+		printf("<TR>\n");
 		for (int x = 0; x < BREITE; x++)
 		{
-			if (x % QUADRAT == 0)
-			{
-				printf("| "); //nach jedem Quadrat vertikale Linie
-			}
-
 			if (getEditierbarElement(x, y) == '0')
 			{
-				printf("%s%c%s ",FARBE_ROT, getZahlenElement(x, y), FARBE_ZURUECKSETZEN); //x und y getauscht, sonst transformiert 
+				printf("<TD><INPUT TYPE=\"TEXT\" NAME=\"feld_%d_%d\" MAXLENGTH=\"1\" SIZE=\"1\" VALUE=\"%c\" readonly></TD>\n", x, y, getZahlenElement(x, y));	
 			}
 			else if (getEditierbarElement(x, y) == '1')
 			{
-				printf("%c ", getZahlenElement(x, y)); //element an x und y printen
+				printf("<TD><INPUT TYPE=\"TEXT\" NAME=\"feld_%d_%d\" MAXLENGTH=\"1\" SIZE=\"1\" VALUE=\"%c\"></TD>\n", x, y, getZahlenElement(x, y));	
 			}
 		}
-		printf("|\n"); //am ende eine letzte vertikale linie
+		printf("<TR>\n");
 	}
-	printf("+ - - - + - - - + - - - +\n"); //am ende eine letzte horizonatle linie 
+	printf("</TABLE></FORM>");
 }
 

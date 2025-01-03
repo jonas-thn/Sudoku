@@ -11,6 +11,7 @@ int zahlenLaden(char* zahlen, const char* original, char* editierbar, char* spei
 
 	if (datei == NULL) //checken ob es funktioniert hat
 	{
+		printf("PROBLEM");
 		fprintf(stderr, "datei oeffnen null error");
 		return -1;
 	}
@@ -33,6 +34,7 @@ int zahlenLaden(char* zahlen, const char* original, char* editierbar, char* spei
 
 	if (datei == NULL) //checken ob es funktioniert hat
 	{
+		printf("PROBLEM");
 		fprintf(stderr, "datei oeffnen null error");
 		return -1;
 	}

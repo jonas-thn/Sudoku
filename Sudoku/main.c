@@ -27,10 +27,16 @@ spalte = x
 zeile = y							
 */
 
-void parsenUndSpeichern(char* content, char* schwierigkeit)
+void zurueckZuRoot()
 {
-	char* leer = "0";
-			
+	printf("Content-Type: text/html\n\n");
+	printf("Status: 302 Found\n");
+	printf("Location: https://www.informatik.htw-dresden.de/~88217/cgi-bin/Sudoku/Sudoku/sudoku.cgi\n\n");
+}
+
+int parsenUndAusfuehren(char* content, char* schwierigkeit, char* originalPfad, char* speicherPfad)
+{
+	char* leer = "0";		
 
 	FILE* datei = fopen("./parser_temp.txt", "w");
 	if(datei == NULL)
@@ -59,37 +65,47 @@ void parsenUndSpeichern(char* content, char* schwierigkeit)
 	char output = '0';
 	if((output = fgetc(p)) != EOF)
 	{
-		printf("%c\n", output);
 		if(output == '1') //speichern
 		{
-			printf("speichern");
+			return 1; 
 		}
 		else if(output == '2') //loesen
 		{
-			printf("loesen");
+			loeserInitialisieren(originalPfad);
+			sudokuLoesen();
+			zahlenBufferBeladen(getLoeserSudokuBuffer());
+			loeserBeenden();
 		}	
 		else if(output == '3') //zuruecksetzen
 		{
-			printf("zuruecksetzen");
+			sudokuLeeren();
 		}
 		else if(output == '4') //neu
 		{
-			printf("neu");
+			generatorInitialisieren();
+			sudokuGenerieren(3); //schwierigkeit 1-5
+			zahlenBufferBeladen(getGeneriertesSudoku());
+			generatorDateiManager(originalPfad, speicherPfad, getZahlen());
+			generatorBeenden();
 		}
 
 		else //nix 
 		{
-			printf("0");
+
 		}
 	}
 	else
 	{
 		printf("PROBLEM");
 	}
+
+	return 0;
 }
 
 void auswahlMenue()
 {
+printf("<H1>Sudoku!</H1>\n");
+
 	printf("<FORM ACTION=\"\" METHOD=\"POST\">\n");
 	printSudoku();
 	printf("<LABEL FOR=\"auswahl\">Was moechtest du machen:</LABEL>\n");
@@ -99,75 +115,102 @@ void auswahlMenue()
 		printf("<OPTION VALUE=\"zuruecksetzen\">Zuruecksetzen</OPTION>\n");
 	printf("</SELECT>\n");
 	printf("<BR>\n");
-	printf("<BUTTON TYPE=\"SUBMIT\">Auswhaehlen</BUUTON>\n");
+	printf("<BUTTON TYPE=\"SUBMIT\">Auswhaehlen</BUTTON>\n");
 	printf("</FORM>\n");
+}
+
+void sudokuMenue(int zurueck)
+{
+	if(zurueck == 1)
+	{
+		printf("Es wurde erfolgreich gespeichert. <BR>\n");
+		printf("<A href=\"sudoku.cgi\">Zurueck zum Menue.</A>");
+	}
+	else
+	{
+		auswahlMenue();
+	}
 }
 
 void einfachQuery(char* content)
 {	
-	parsenUndSpeichern(content, "&schwierigkeit=einfach");
-
 	char* originalPfad = "./Sudokus/Sudoku1.txt";
 	char* speicherPfad = "./Sudokus/Sudoku1_Save.txt";
 
 	zahlenLaden(getZahlen(), originalPfad, getEditierbar(), speicherPfad);
-	auswahlMenue();
-}
+	
+	int zurueck = parsenUndAusfuehren(content, "&schwierigkeit=einfach", originalPfad, speicherPfad);
+
+	sudokuMenue(zurueck);
+}	
 
 void mittelQuery(char* content)
 {
-	parsenUndSpeichern(content, "&schwierigkeit=mittel");
-
 	char* originalPfad = "./Sudokus/Sudoku2.txt";
 	char* speicherPfad = "./Sudokus/Sudoku2_Save.txt";
 
 	zahlenLaden(getZahlen(), originalPfad, getEditierbar(), speicherPfad);
-	auswahlMenue();
+
+	int zurueck = parsenUndAusfuehren(content, "&schwierigkeit=mittel", originalPfad, speicherPfad);
+
+	sudokuMenue(zurueck);
 }
 
 void schwerQuery(char* content)
 {
-	parsenUndSpeichern(content, "&schwierigkeit=schwer");
-
 	char* originalPfad = "./Sudokus/Sudoku3.txt";
 	char* speicherPfad = "./Sudokus/Sudoku3_Save.txt";
 
 	zahlenLaden(getZahlen(), originalPfad, getEditierbar(), speicherPfad);
-	auswahlMenue();
+
+	int zurueck = parsenUndAusfuehren(content, "&schwierigkeit=schwer", originalPfad, speicherPfad);
+
+	sudokuMenue(zurueck);
 }
 
 void unmoeglichQuery(char* content)
 {
-	parsenUndSpeichern(content, "&schwierigkeit=unmoeglich");
-
 	char* originalPfad = "./Sudokus/Sudoku4.txt";
 	char* speicherPfad = "./Sudokus/Sudoku4_Save.txt";
 
 	zahlenLaden(getZahlen(), originalPfad, getEditierbar(), speicherPfad);
-	auswahlMenue();
+
+	int zurueck = parsenUndAusfuehren(content, "&schwierigkeit=unmoeglich", originalPfad, speicherPfad);
+
+	sudokuMenue(zurueck);
 }
 
 void generiertQuery(char* content)
 {
-	parsenUndSpeichern(content, "&schwierigkeit=generiert");
-
 	char* originalPfad = "./Sudokus/Sudoku5.txt";
 	char* speicherPfad = "./Sudokus/Sudoku5_Save.txt";
 
 	zahlenLaden(getZahlen(), originalPfad, getEditierbar(), speicherPfad);
-		
-	printf("<FORM ACTION=\"\" METHOD=\"POST\">\n");
-	printSudoku();
-	printf("<LABEL FOR=\"auswahl\">Was moechtest du machen:</LABEL>\n");
-	printf("<SELECT NAME=\"auswahl\" ID=\"auswahl\">\n");
-		printf("<OPTION VALUE=\"speichern\">Speichern</OPTION>\n");
-		printf("<OPTION VALUE=\"loesen\">Loesen</OPTION>\n");
-		printf("<OPTION VALUE=\"zuruecksetzen\">Zuruecksetzen</OPTION>\n");
-		printf("<OPTION VALUE=\"neu\">Neu generieren</OPTION>\n");
-	printf("</SELECT>\n");
-	printf("<BR>\n");
-	printf("<BUTTON TYPE=\"SUBMIT\">Auswhaehlen</BUUTON>\n");
-	printf("</FORM>\n");
+
+	int zurueck = parsenUndAusfuehren(content, "&schwierigkeit=generiert", originalPfad, speicherPfad);
+	
+	if(zurueck == 1)
+	{
+		printf("Es wurde erfolgreich gespeichert. <BR>\n");
+		printf("<A href=\"sudoku.cgi\">Zurueck zum Menue.</A>");
+	}
+	else
+	{
+		printf("<H1>Sudoku!</H1>\n");
+	
+		printf("<FORM ACTION=\"\" METHOD=\"POST\">\n");
+		printSudoku();
+		printf("<LABEL FOR=\"auswahl\">Was moechtest du machen:</LABEL>\n");
+		printf("<SELECT NAME=\"auswahl\" ID=\"auswahl\">\n");
+			printf("<OPTION VALUE=\"speichern\">Speichern</OPTION>\n");
+			printf("<OPTION VALUE=\"loesen\">Loesen</OPTION>\n");
+			printf("<OPTION VALUE=\"zuruecksetzen\">Zuruecksetzen</OPTION>\n");
+			printf("<OPTION VALUE=\"neu\">Neu generieren</OPTION>\n");
+		printf("</SELECT>\n");
+		printf("<BR>\n");
+		printf("<BUTTON TYPE=\"SUBMIT\">Auswhaehlen</BUTTON>\n");
+		printf("</FORM>\n");
+	}	
 }
 
 void startQuery()
@@ -214,7 +257,27 @@ void queryAuswahl(char* content)
 int main(void)
 {	
 	printf("Content-Type: text/html\n\n");
-	printf("<HTML><HEAD><TITLE>Sudoku</TITLE></HEAD>\n");
+	printf("<HTML><HEAD>\n");
+	printf("<TITLE>Sudoku</TITLE>\n");
+
+	printf("<STYLE>\n");
+	printf("@keyframes farbwechsel {\n");
+	printf("0% { color:35b154; }\n");
+	printf("50% { color:35b187; }\n");
+	printf("100% { color:35abb1; }\n");
+	printf("}\n");
+	printf("H1 {\n");
+	//printf("	color: #4CAF50;\n");
+	printf("	animation: farbwechsel 5s ease-in-out infinite alternate;\n");
+	printf("	font-size: 84px;\n");
+	printf(" 	text-shadow: 3px 3px 0px rgba(0, 70, 30, 1.0);\n");
+	printf("	font-family: \"Impact\", sans-serif;\n");
+	printf(" 	font-weight: normal;\n");
+	printf("	margin-bottom: 0;\n");
+	printf("}\n");
+	printf("</STYLE>\n");
+
+	printf("</HEAD>\n");	
 	printf("</BODY>\n");
 
 	//sudoku initialisieren (malloc, usw...)

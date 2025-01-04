@@ -1,9 +1,37 @@
 import sys
 
+def parsen(pfad):
+	
+	with open(pfad, "r") as datei:
+		text = datei.read();
+		if text == "0":
+			return None
+		else:
+			daten = text.split('&');
+		
+			dict = {}
+			for paar in daten:
+				key, wert = paar.split('=');
+				dict[key] = wert;
+			return dict;
+
 def main():
-	#input = sys.stdin.read().strip();
-	print("test");
+	dict = parsen("./parser_temp.txt")
+	if dict == None:
+		print("0")
+	else:
+		auswahl = dict['auswahl']
+		if auswahl == "speichern":
+			print('1')
+		elif auswahl == "loesen":
+			print('2')
+		elif auswahl == "zuruecksetzen":
+			print('3')
+		elif auswahl == "neu":
+			print('4')
+		else:
+			print('0')
 	
 
 if __name__ == "__main__":
-	main();
+	main()

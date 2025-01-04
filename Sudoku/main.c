@@ -27,9 +27,10 @@ spalte = x
 zeile = y							
 */
 
-void parsenUndSpeichern(char* content)
+void parsenUndSpeichern(char* content, char* schwierigkeit)
 {
-	char* leer = "0";	
+	char* leer = "0";
+			
 
 	FILE* datei = fopen("./parser_temp.txt", "w");
 	if(datei == NULL)
@@ -38,6 +39,7 @@ void parsenUndSpeichern(char* content)
 	}
 	if(content != NULL)
 	{
+		strcat(content, schwierigkeit);
 		fputs(content, datei);	
 	}
 	else
@@ -54,12 +56,36 @@ void parsenUndSpeichern(char* content)
 		perror("popopen error");
 	}
 		
-//	char output[256];
-//	if(fgets(output, 256, p) != NULL)
-//	{
-//		printf("%s\n", output);
-//	}
-	pclose(p);
+	char output = '0';
+	if((output = fgetc(p)) != EOF)
+	{
+		printf("%c\n", output);
+		if(output == '1') //speichern
+		{
+			printf("speichern");
+		}
+		else if(output == '2') //loesen
+		{
+			printf("loesen");
+		}	
+		else if(output == '3') //zuruecksetzen
+		{
+			printf("zuruecksetzen");
+		}
+		else if(output == '4') //neu
+		{
+			printf("neu");
+		}
+
+		else //nix 
+		{
+			printf("0");
+		}
+	}
+	else
+	{
+		printf("PROBLEM");
+	}
 }
 
 void auswahlMenue()
@@ -69,7 +95,6 @@ void auswahlMenue()
 	printf("<LABEL FOR=\"auswahl\">Was moechtest du machen:</LABEL>\n");
 	printf("<SELECT NAME=\"auswahl\" ID=\"auswahl\">\n");
 		printf("<OPTION VALUE=\"speichern\">Speichern</OPTION>\n");
-		printf("<OPTION VALUE=\"undo\">Undo</OPTION>\n");
 		printf("<OPTION VALUE=\"loesen\">Loesen</OPTION>\n");
 		printf("<OPTION VALUE=\"zuruecksetzen\">Zuruecksetzen</OPTION>\n");
 	printf("</SELECT>\n");
@@ -80,48 +105,52 @@ void auswahlMenue()
 
 void einfachQuery(char* content)
 {	
-	parsenUndSpeichern(content);
+	parsenUndSpeichern(content, "&schwierigkeit=einfach");
 
 	char* originalPfad = "./Sudokus/Sudoku1.txt";
 	char* speicherPfad = "./Sudokus/Sudoku1_Save.txt";
 
 	zahlenLaden(getZahlen(), originalPfad, getEditierbar(), speicherPfad);
 	auswahlMenue();
-	printf(content);
 }
 
 void mittelQuery(char* content)
 {
+	parsenUndSpeichern(content, "&schwierigkeit=mittel");
+
 	char* originalPfad = "./Sudokus/Sudoku2.txt";
 	char* speicherPfad = "./Sudokus/Sudoku2_Save.txt";
 
 	zahlenLaden(getZahlen(), originalPfad, getEditierbar(), speicherPfad);
 	auswahlMenue();
-	printf(content);
 }
 
 void schwerQuery(char* content)
 {
+	parsenUndSpeichern(content, "&schwierigkeit=schwer");
+
 	char* originalPfad = "./Sudokus/Sudoku3.txt";
 	char* speicherPfad = "./Sudokus/Sudoku3_Save.txt";
 
 	zahlenLaden(getZahlen(), originalPfad, getEditierbar(), speicherPfad);
 	auswahlMenue();
-	printf(content);
 }
 
 void unmoeglichQuery(char* content)
 {
+	parsenUndSpeichern(content, "&schwierigkeit=unmoeglich");
+
 	char* originalPfad = "./Sudokus/Sudoku4.txt";
 	char* speicherPfad = "./Sudokus/Sudoku4_Save.txt";
 
 	zahlenLaden(getZahlen(), originalPfad, getEditierbar(), speicherPfad);
 	auswahlMenue();
-	printf(content);
 }
 
 void generiertQuery(char* content)
 {
+	parsenUndSpeichern(content, "&schwierigkeit=generiert");
+
 	char* originalPfad = "./Sudokus/Sudoku5.txt";
 	char* speicherPfad = "./Sudokus/Sudoku5_Save.txt";
 
@@ -132,7 +161,6 @@ void generiertQuery(char* content)
 	printf("<LABEL FOR=\"auswahl\">Was moechtest du machen:</LABEL>\n");
 	printf("<SELECT NAME=\"auswahl\" ID=\"auswahl\">\n");
 		printf("<OPTION VALUE=\"speichern\">Speichern</OPTION>\n");
-		printf("<OPTION VALUE=\"undo\">Undo</OPTION>\n");
 		printf("<OPTION VALUE=\"loesen\">Loesen</OPTION>\n");
 		printf("<OPTION VALUE=\"zuruecksetzen\">Zuruecksetzen</OPTION>\n");
 		printf("<OPTION VALUE=\"neu\">Neu generieren</OPTION>\n");
@@ -140,8 +168,6 @@ void generiertQuery(char* content)
 	printf("<BR>\n");
 	printf("<BUTTON TYPE=\"SUBMIT\">Auswhaehlen</BUUTON>\n");
 	printf("</FORM>\n");
-	
-	printf(content);
 }
 
 void startQuery()

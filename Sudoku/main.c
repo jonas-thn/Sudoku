@@ -192,7 +192,7 @@ void generiertQuery(char* content)
 	}
 	else
 	{
-		zahlenLaden(getZahlen(), originalPfad, getEditierbar(), speicherPfad);
+		editierbarAktualisieren(getEditierbar(), originalPfad);
 		
 		printf("<H1>Sudoku!</H1>\n");
 	
@@ -316,6 +316,12 @@ int main(void)
 	printf(" 	font-weight: normal;\n");
 	printf("	margin-bottom: 0;\n");
 	printf("}\n");
+
+	printf("BODY {\n");
+	printf("transform: scale(1.5);\n");
+	printf("transform-origin: top left;\n");
+	printf("}\n");	
+
 	printf("</STYLE>\n");
 
 	printf("</HEAD>\n");	

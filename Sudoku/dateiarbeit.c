@@ -53,6 +53,36 @@ int zahlenLaden(char* zahlen, const char* original, char* editierbar, char* spei
 	return 0; //alles gut
 }
 
+int editierbarAktualisieren(char* editierbar, const char* original)
+{
+	FILE* datei; //file pointer
+	char temp; //temp char speichern
+	int n = 0; //char nummer (in arrays)
+
+	datei = fopen(original, "r"); //datei in read mode oeffen
+
+	if (datei == NULL) //checken ob es funktioniert hat
+	{
+		printf("PROBLEM");
+		fprintf(stderr, "datei oeffnen null error");
+		return -1;
+	}
+
+	while ((temp = fgetc(datei)) != EOF) //solange char lesen und in temp speichern, bin end of file erreicht
+	{
+		if (temp != '\n') //'\n' nicht speichern
+		{
+			editierbar[n] = temp == '.' ? '1' : '0'; //editierbar array laden, je nachdem ob zahl oder . gelesen
+			n++; //naechster char(in arrays)
+		}
+	}
+
+	fclose(datei); //datei schliessen
+
+	return 0; //alles gut
+}
+
+
 int zahlenSpeichern(char* zahlen, const char* dateiname, int laenge) //zahlen datei schreiben
 {
 	FILE* datei; //file pointer

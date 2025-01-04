@@ -27,6 +27,41 @@ spalte = x
 zeile = y							
 */
 
+void parsenUndSpeichern(char* content)
+{
+	char* leer = "0";	
+
+	FILE* datei = fopen("./parser_temp.txt", "w");
+	if(datei == NULL)
+	{
+		printf("ERROR");
+	}
+	if(content != NULL)
+	{
+		fputs(content, datei);	
+	}
+	else
+	{
+		fputs(leer, datei);
+	}
+	fclose(datei);
+
+	const char* befehl = "python3 parser_saver";
+	
+	FILE* p = popen(befehl, "r");
+	if(p == NULL)
+	{
+		perror("popopen error");
+	}
+		
+//	char output[256];
+//	if(fgets(output, 256, p) != NULL)
+//	{
+//		printf("%s\n", output);
+//	}
+	pclose(p);
+}
+
 void auswahlMenue()
 {
 	printf("<FORM ACTION=\"\" METHOD=\"POST\">\n");
@@ -45,6 +80,8 @@ void auswahlMenue()
 
 void einfachQuery(char* content)
 {	
+	parsenUndSpeichern(content);
+
 	char* originalPfad = "./Sudokus/Sudoku1.txt";
 	char* speicherPfad = "./Sudokus/Sudoku1_Save.txt";
 

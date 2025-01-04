@@ -1,0 +1,9 @@
+import sys
+
+def main():
+	#input = sys.stdin.read().strip();
+	print("test");
+	
+
+if __name__ == "__main__":
+	main();

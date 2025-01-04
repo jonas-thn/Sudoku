@@ -88,11 +88,6 @@ int parsenUndAusfuehren(char* content, char* schwierigkeit, char* originalPfad, 
 			generatorDateiManager(originalPfad, speicherPfad, getZahlen());
 			generatorBeenden();
 		}
-
-		else //nix 
-		{
-
-		}
 	}
 	else
 	{
@@ -108,6 +103,7 @@ printf("<H1>Sudoku!</H1>\n");
 
 	printf("<FORM ACTION=\"\" METHOD=\"POST\">\n");
 	printSudoku();
+	printf("<BR>\n");
 	printf("<LABEL FOR=\"auswahl\">Was moechtest du machen:</LABEL>\n");
 	printf("<SELECT NAME=\"auswahl\" ID=\"auswahl\">\n");
 		printf("<OPTION VALUE=\"speichern\">Speichern</OPTION>\n");
@@ -196,10 +192,13 @@ void generiertQuery(char* content)
 	}
 	else
 	{
+		zahlenLaden(getZahlen(), originalPfad, getEditierbar(), speicherPfad);
+		
 		printf("<H1>Sudoku!</H1>\n");
 	
 		printf("<FORM ACTION=\"\" METHOD=\"POST\">\n");
 		printSudoku();
+		printf("<BR>\n");
 		printf("<LABEL FOR=\"auswahl\">Was moechtest du machen:</LABEL>\n");
 		printf("<SELECT NAME=\"auswahl\" ID=\"auswahl\">\n");
 			printf("<OPTION VALUE=\"speichern\">Speichern</OPTION>\n");
@@ -266,11 +265,53 @@ int main(void)
 	printf("50% { color:35b187; }\n");
 	printf("100% { color:35abb1; }\n");
 	printf("}\n");
+
+	printf(".rot {\n");
+	printf("color: red;\n");
+	printf("}\n");
+
+	printf(".zelle {\n");
+	printf("width: 30px;\n");
+	printf("height: 30px;\n");
+	printf("text-align: center;\n");
+	printf("}\n");
+
+	printf(".sudoku {\n");
+	printf("border-collapse: collapse;\n");
+	printf("}\n");
+
+	//vertikal 
+	printf("TD:nth-child(3n) {\n");
+	printf("border-right: 3px solid black;\n");
+	printf("}\n");
+
+	//horizontal
+	printf("TR:nth-child(3n - 1) TD {\n");
+	printf("border-bottom: 3px solid black;\n");
+	printf("}\n");
+	
+	//erste links vertikal	
+	printf("TD:first-child {\n");
+	printf("border-left: 3px solid black;\n");
+	printf("}\n");
+
+	//erste oben horizontal
+	printf("TR:first-child TD {\n");
+	printf("border-top: 3px solid black;\n");
+	printf("}\n");
+
+
+	printf("TD {\n");
+	printf("width: 30px;\n");
+	printf("height: 30px;\n");
+	printf("padding: 0;\n");
+	printf("border: 1px solid black;\n");
+	printf("}\n");
+
 	printf("H1 {\n");
-	//printf("	color: #4CAF50;\n");
 	printf("	animation: farbwechsel 5s ease-in-out infinite alternate;\n");
 	printf("	font-size: 84px;\n");
-	printf(" 	text-shadow: 3px 3px 0px rgba(0, 70, 30, 1.0);\n");
+	printf(" 	text-shadow: 3px 3px 0px rgba(0, 70, 50, 1.0);\n");
 	printf("	font-family: \"Impact\", sans-serif;\n");
 	printf(" 	font-weight: normal;\n");
 	printf("	margin-bottom: 0;\n");

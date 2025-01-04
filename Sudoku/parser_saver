@@ -15,11 +15,50 @@ def parsen(pfad):
 				dict[key] = wert;
 			return dict;
 
+def sudoku_speichern(dict):
+	if dict['auswahl'] == "speichern":
+		speicher_pfad = "";
+			
+		schwierigkeit = dict['schwierigkeit']
+		
+		if schwierigkeit == "einfach":
+			speicher_pfad = "./Sudokus/Sudoku1_Save.txt"
+
+		elif schwierigkeit == "mittel":
+			speicher_pfad = "./Sudokus/Sudoku2_Save.txt"
+
+		elif schwierigkeit == "schwer":
+			speicher_pfad = "./Sudokus/Sudoku3_Save.txt"
+
+		elif schwierigkeit == "unmoeglich":
+			speicher_pfad = "./Sudokus/Sudoku4_Save.txt"
+
+		elif schwierigkeit == "generiert":
+			speicher_pfad = "./Sudokus/Sudoku5_Save.txt"
+
+		zeilen = [""]
+			
+		for y in range(9):
+			zeile = ""
+			for x in range(9):
+				key = f"feld{x}{y}"
+				zeile += dict.get(key, ".")
+			zeilen.append(zeile)
+			
+		output = "\n".join(zeilen)
+
+		with open(speicher_pfad, "w") as file:
+			file.write(output)
+
+
+
 def main():
 	dict = parsen("./parser_temp.txt")
 	if dict == None:
 		print("0")
 	else:
+		sudoku_speichern(dict)		
+
 		auswahl = dict['auswahl']
 		if auswahl == "speichern":
 			print('1')

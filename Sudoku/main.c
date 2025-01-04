@@ -335,6 +335,35 @@ int main(void)
 		exit(1);
 	}
 
+	const char* identString = getenv("REMOTE_IDENT");
+	if(identString == NULL)
+	{
+		identString = "Unbekannt";
+	}
+
+	const char* userString = getenv("REMOTE_USER");
+	if(userString == NULL)
+	{
+		userString = "Unbekannt";
+	}
+
+	const char* agentString = getenv("HTTP_USER_AGENT");
+	if(agentString == NULL)
+	{
+		agentString = "Unbekannt";
+	}
+	
+	const char* refererString = getenv("HTTP_REFERER");
+	if(refererString == NULL)
+	{
+		refererString = "Unbekannt";
+	}
+
+	FILE* userLog = fopen("./user-log.txt", "a");
+	fprintf(userLog, "%s - %s - %s - %s\n", identString, userString, agentString, refererString);
+	fclose(userLog);
+	
+
 	char* contentLengthString = getenv("CONTENT_LENGTH");
 	if(contentLengthString != NULL)
 	{
